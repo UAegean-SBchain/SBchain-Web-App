@@ -1,13 +1,13 @@
-package com.example.sbchainssioicdoauth2;
+// package com.example.sbchainssioicdoauth2;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+// import org.junit.jupiter.api.Test;
+// import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class SbchainSsiOicdOauth2ApplicationTests {
+// @SpringBootTest
+// class SbchainSsiOicdOauth2ApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+// 	@Test
+// 	void contextLoads() {
+// 	}
 
-}
+// }

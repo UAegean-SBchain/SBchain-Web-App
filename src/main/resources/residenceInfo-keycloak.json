@@ -1,9 +1,10 @@
 {
-    "realm": "residenceinfo",
-    "resource" : "residence-info-client",
-    "auth-server-url": "http://localhost:9090/auth/",
-    "credentials" : {
-        "secret" : "5dcb56e8-02d5-41e8-ab3e-be15c7aab75c"
-     },
-    "principal-attribute" : "prefered_username"
+  "realm": "SSI-Taxis",
+  "auth-server-url": "https://e1b07955062c.ngrok.io/auth",
+  "ssl-required": "external",
+  "resource": "sbchain-taxis",
+  "credentials": {
+    "secret": "89d53c54-0825-4b29-9b9d-65f621654f92"
+  },
+  "confidential-port": 0
 }

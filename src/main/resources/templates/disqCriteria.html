@@ -8,8 +8,15 @@
 <body>
     <div th:replace="fragments/header"></div>
     <div class="container">
+        
+
+       <div th:replace="fragments/navigation"></div>
+        
         <!-- <form method="post" action="#" th:action="@{/multi/disqualifyingCrit/save}" th:object="${disqCriteria}" id="infoForm"> -->
             <div class="formTitleContainer">
+                
+                
+                
                 <h2 th:text="#{disqualifying.criteria.title}" class="formTitle">Disqualifying Criteria</h2>
                 <div class="infoButton" th:text="i" id="infoButton">i</div>
             </div>
@@ -92,12 +99,27 @@
                     <div th:text="#{luxury.description}" class="text disqCrit__text text--right"> Airplane, yacht owner </div>
                 </div>
             </div>
-            <div class="submitButton">
-                <a th:href="@{'/multi/disqualifyingCrit/save?uuid='+${uuid}}" th:text="#{next}" class="nextLink">Fetch Info</a>
+            <div class="row button__row">
+<!--                <div class="fetchButton">
+                    <a th:href="@{'/multi/disqualifyingCrit/results?uuid='+${uuid}}" th:text="#{fetch.info}" class="fetchLink">Fetch Info</a>
+                </div>-->
+<!--                <div class="submitButton">
+                    <a th:href="@{'/multi/disqualifyingCrit/continue?uuid='+${uuid}}" th:text="#{next}" class="nextLink">Fetch Info</a>
+                </div>-->
+                             <div class="submitButton" th:if="${ssiInfo.completed}">
+                <a th:href="@{'/multi/disqualifyingCrit/nextCompleted?uuid='+${uuid}}" th:text="#{next}" class="nextLink">Next</a>
+            </div>
+
+            <div class="submitButton" th:unless="${ssiInfo.completed}">
+                <a th:href="@{'/multi/disqualifyingCrit/continue?uuid='+${uuid}}" th:text="#{next}" class="nextLink">Next</a>
+            </div> 
+
+
             </div> 
             
         <!-- </form> -->
     </div>
+    <div th:replace="fragments/footer"></div>
 
     <script type="text/javascript" src="../static/js/main.js" th:src="@{/js/main.js}"></script>
     <script type="text/javascript" src="../static/js/infoText.js" th:src="@{/js/infoText.js}"></script>

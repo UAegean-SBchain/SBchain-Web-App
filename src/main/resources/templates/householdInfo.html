@@ -9,6 +9,9 @@
 <body>
     <div th:replace="fragments/header"></div>
     <div class="container">
+           <div th:replace="fragments/navigation"></div>
+        
+        
             <div class="formTitleContainer">
                 <h2 th:text="#{household.info.title}" class="formTitle">Disqualifying Criteria</h2>
                 <div class="infoButton" th:text="i" id="infoButton">i</div>
@@ -18,33 +21,49 @@
                 <h2 th:text="#{household.info.infobox.title}" class="infoTextBoxTitle"></h2>
                 
             </div>
-            
-            <table class="table householdTable" >
-                <thead>
-                    <tr>
-                        <th class="tableHeader householdHeader householdHeader--number" th:text="'#'"></th>
-                        <th class="tableHeader householdHeader householdHeader--member" th:text="#{household.member}"></th>
-                        <th class="tableHeader householdHeader householdHeader--relation" th:text="#{household.member.relation}"></th>
-                        <th class="tableHeader householdHeader householdHeader--empty"></th>
-                    </tr>
-                </thead>
-                <tbody th:if="${ssiInfo.get('householdComposition')}" >
-                    <tr  th:each="item, iter : ${ssiInfo[householdComposition]}">
-                        <td class="column column__1" th:text="${iter.count}"></td>
-                        <td class="column column__2" th:text="${item.key}"></td>
-                        <td class="column column__3" th:text="${item.value}"></td>
-                        <td class="column column__4" ></td>
-                    </tr>
-                </tbody>
-            </table>
-
+            <div th:if="${null != houseHoldInfo}">
+                <table class="table householdTable" >
+                    <thead>
+                        <tr>
+                            <th class="tableHeader householdHeader householdHeader--number" th:text="'#'"></th>
+                            <th class="tableHeader householdHeader householdHeader--member" th:text="#{household.member}"></th>
+                            <th class="tableHeader householdHeader householdHeader--relation" th:text="#{household.member.relation}"></th>
+                        </tr>
+                    </thead>
+                    <tbody th:if="${houseHoldInfo}" >
+                        <tr th:each="member, counter : ${houseHoldInfo}">
+                            <td class="column column__1" th:text="${counter.count}"></td>
+                            <span th:each="item, iter : ${member}">
+                            <td class="column column__3" th:text="${item.value}"></td>
+                        </span>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
             <div class="row button__row">
-                <div class="submitButton">
-                    <a th:href="@{'/householdInfo/save?uuid='+${uuid}}" th:text="#{next}" class="nextLink">Fetch Info</a>
-                </div>
+<!--                <div class="fetchButton">
+                    <a th:href="@{'/multi/householdInfo/results?uuid='+${uuid}}" th:text="#{fetch.info}" class="fetchLink">Fetch Info</a>
+                </div>-->
+                <!-- <div class="submitButton">
+                    <a th:href="@{'/multi/householdInfo/save?uuid='+${uuid}}" th:text="#{next}" class="nextLink">Fetch Info</a>
+                </div> -->
+<!--                <div class="submitFinalButton">
+                    <a th:href="@{'/multi/householdInfo/save?uuid='+${uuid}}" th:text="#{submit}" class="submitFinal">Fetch Info</a>
+                </div>-->
+<!--            <div class="submitButton">
+                <a th:href="@{'/multi/householdInfo/continue?uuid='+${uuid}}" th:text="#{next}" class="nextLink">Next</a>
+            </div>-->
+            <div class="submitButton" th:if="${ssiInfo.completed}">
+                <a th:href="@{'/multi/householdInfo/nextCompleted?uuid='+${uuid}}" th:text="#{next}" class="nextLink">Next</a>
+            </div>
+
+            <div class="submitButton" th:unless="${ssiInfo.completed}">
+                <a th:href="@{'/multi/householdInfo/continue?uuid='+${uuid}}" th:text="#{next}" class="nextLink">Next</a>
+            </div> 
             </div>
         </div>
-
+        <div th:replace="fragments/footer"></div>
         <script type="text/javascript" src="../static/js/infoText.js" th:src="@{/js/infoText.js}"></script>
         <script type="text/javascript" src="../static/js/navigation.js" th:src="@{/js/navigation.js}"></script>
     </body>

@@ -1,0 +1,51 @@
+<div th:fragment="footer">
+    <div id="footer" class="footer">
+        <a th:href="@{/logout}" th:text="#{logout.and.return}" id="logoutButton">SSI</a>
+    </div>
+</div>
+
+
+    
+    <script th:inline="javascript">
+    /*<![CDATA[*/
+    function tempSave()
+    {
+        let uuid = /*[[${uuid}]]*/ 'default';
+        var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+        var theUrl = "/db/temp";
+        xmlhttp.open("POST", theUrl);
+        xmlhttp.setRequestHeader("Content-Type", 'application/x-www-form-urlencoded');
+        xmlhttp.onreadystatechange = function()
+        {
+            if(xmlhttp.readyState == 4 && xmlhttp.status == 200)
+            {
+                alert(xmlhttp.responseText);
+            }
+        }
+                xmlhttp.send(encodeURI('uuid=' + uuid));
+
+    }
+    
+    function saveFinal()
+    {
+        let uuid = /*[[${uuid}]]*/ 'default';
+        var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+        var theUrl = "/db/save";
+        xmlhttp.open("POST", theUrl);
+        xmlhttp.setRequestHeader("Content-Type", 'application/x-www-form-urlencoded');
+        xmlhttp.onreadystatechange = function()
+        {
+            if(xmlhttp.readyState == 4 && xmlhttp.status == 200)
+            {
+                alert(xmlhttp.responseText);
+            }
+        }
+                xmlhttp.send(encodeURI('uuid=' + uuid));
+    }
+    /*]]>*/
+    </script>
+    
+    
+    
+    
+    

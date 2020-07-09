@@ -10,6 +10,8 @@
     <div class="container">
         <!-- <form method="post" action="#" th:action="@{/financialInfo/save}" th:object="${ssiInformation}" id="infoForm"> -->
            
+       <div th:replace="fragments/navigation"></div>
+        
             <h4 th:text="#{asset.info.title}" class="formTitle">Financial Info</h4>
                 <hr class="divider--light">
             <div class="row__container"> 
@@ -106,15 +108,24 @@
             </div>
             
             <div class="row button__row">
-                <div class="fetchButton">
-                    <a th:href="@{'/assetInfo/results?uuid='+${uuid}}" th:text="#{fetch.info}" class="fetchLink">Fetch Info</a>
-                </div>
-                <div class="submitButton">
-                    <a th:href="@{'/assetInfo/save?uuid='+${uuid}}" th:text="#{next}" class="nextLink">Fetch Info</a>
-                </div>
+<!--                <div class="fetchButton">
+                    <a th:href="@{'/multi/assetInfo/results?uuid='+${uuid}}" th:text="#{fetch.info}" class="fetchLink">Fetch Info</a>
+                </div>-->
+<!--                <div class="submitButton">
+                    <a th:href="@{'/multi/assetInfo/continue?uuid='+${uuid}}" th:text="#{next}" class="nextLink">Fetch Info</a>
+                </div>-->
+                            <div class="submitButton" th:if="${ssiInfo.completed}">
+                <a th:href="@{'/multi/assetInfo/nextCompleted?uuid='+${uuid}}" th:text="#{next}" class="nextLink">Next</a>
+            </div>
+
+            <div class="submitButton" th:unless="${ssiInfo.completed}">
+                <a th:href="@{'/multi/assetInfo/continue?uuid='+${uuid}}" th:text="#{next}" class="nextLink">Next</a>
+            </div> 
+
             </div>
         <!-- </form> -->
     </div>
+    <div th:replace="fragments/footer"></div>
     <script type="text/javascript" src="../static/js/infoText.js" th:src="@{/js/infoText.js}"></script>
     <script type="text/javascript" src="../static/js/navigation.js" th:src="@{/js/navigation.js}"></script>
 </body>

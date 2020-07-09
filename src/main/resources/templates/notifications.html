@@ -69,14 +69,14 @@
 
             <div class="row button__row">
                 <div class="fetchButton">
-                    <a th:href="@{'/notifications/results?uuid='+${uuid}}" th:text="#{fetch.info}" class="fetchLink">Fetch Info</a>
+                    <a th:href="@{'/multi/notifications/results?uuid='+${uuid}}" th:text="#{fetch.info}" class="fetchLink">Fetch Info</a>
                 </div>
                 <div class="submitButton">
-                    <a th:href="@{'/notifications/save?uuid='+${uuid}}" th:text="#{next}" class="nextLink">Fetch Info</a>
+                    <a th:href="@{'/multi/notifications/save?uuid='+${uuid}}" th:text="#{next}" class="nextLink">Fetch Info</a>
                 </div>
             </div>
         </div>
-
+        <div th:replace="fragments/footer"></div>
         <script type="text/javascript" src="../static/js/infoText.js" th:src="@{/js/infoText.js}"></script>
         <script type="text/javascript" src="../static/js/navigation.js" th:src="@{/js/navigation.js}"></script>
     </body>

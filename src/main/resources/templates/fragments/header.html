@@ -1,5 +1,45 @@
 <div th:fragment="header">
-    <div id="header" class="header">
-        <div th:text="#{ssi.sbchain}" id="headerTitle">SSI</div>
+    <div id="header" class="header row">
+        <div  class="col" th:style="'background: url(/images/combo-logo.png);height: 73px;
+            background-position-x: 0px;
+            background-position-y: 0px;
+            background-repeat: no-repeat; width: 100%;'" id="headerTitle">
+            SSI
+        </div>
+        <div class="col" th:style="'font-size: 1rem;
+            position: absolute;
+            bottom: 0;
+            right: 3rem;'">
+            <span th:text="${ssiInfo != null}? ${ssiInfo[taxisFamilyName]} : ''"></span>
+            <span th:text="${ssiInfo != null}? ${ssiInfo[taxisFirstName]} : ''"></span>
+            <span th:text="${ssiInfo != null && ssiInfo[taxisFamilyName] != null}? '( ΑΦΜ:':''"></span>
+            <span th:text="${ssiInfo != null}? ${ssiInfo[taxisAfm]} : ''"></span>
+            <span th:text="${ssiInfo != null && ssiInfo[taxisFamilyName]!= null}? ')': ''"></span>
+            
+        </div>
     </div>
+    
+    <div class="headerFooter row" th:style=" 'background-color: #0275d8;
+    height: 1.5rem;
+    width: 100%;
+    font-size: 2rem;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;'">
+        <span th:style="'    font-size: 1rem;
+    position: absolute;
+       margin-top: 0.2rem;
+    display: block;
+    right: 0rem;
+    width: 7rem;'" >
+                <b>
+                    <a style="color: #ffffff" th:href="@{/logout}" th:text="${ssiInfo != null}? #{logout.and.return}: ''"  id="logoutButton" >logout</a>
+                </b>
+            </span>
+        
+    </div>
+    
+<!--    <div class="col" th:text="#{ssi.sbchain}">
+        Text
+    </div>-->
 </div>

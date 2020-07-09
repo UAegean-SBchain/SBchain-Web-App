@@ -2,9 +2,24 @@ body{
     margin: 0;
     color:rgba(0, 0, 0, 0.726);
     font-family: 'Times New Roman', Times, serif;
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+    
 }
 
 #header{
+    /*background-color: #0275d8;*/
+    height: 10rem;
+    width: 100%;
+    font-size: 2rem;
+    display: flex;
+    justify-content: center;
+    position:relative;
+    /*margin-bottom: 2rem;*/
+}
+
+#headerFooter{
     background-color: #0275d8;
     height: 10rem;
     width: 100%;
@@ -14,9 +29,37 @@ body{
     margin-bottom: 2rem;
 }
 
+
 #headerTitle{
     color:white;
     margin: auto;
+}
+
+
+#footer{
+    background-color: #0275d8;
+    height: 3.6rem;
+    width: 100%;
+    font-size: 1.3rem;
+    display: flex;
+    justify-content: flex-end;
+    bottom: 0;
+    color:white;
+}
+
+#logoutButton{
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem;
+    margin-right: 22rem;
+    margin-top: 0.5rem;
+}
+
+#logoutButtonError{
+    color: white;
+    text-decoration: none;
+    padding: 0 auto;
+    margin: auto 0;
 }
 
 .label{
@@ -103,6 +146,20 @@ body{
     margin-top: 2rem;
     margin-bottom: 2rem;
     max-width: 75%;
+    height: 100%;
+    min-height: 70vh;
+}
+
+.errorMsgContainer{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin-bottom: 1rem;
+}
+
+.errorTitle{
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
 }
 
 .text--right{
@@ -192,6 +249,18 @@ input[type="text"], .input{
     margin: auto;
 }
 
+#errorLogoutButton, errorLogoutButton:visited, errorLogoutButton:active{
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center; 
+    margin: auto;
+}
+
+
 .submitButton{
     background-color: #5cb85c;
     width: 8rem;
@@ -199,6 +268,33 @@ input[type="text"], .input{
     border: none;
     color: white;
 }
+
+
+.backButton{
+    background-color: #215bff;
+    width: 8rem;
+    height: 3.5rem;
+    border: none;
+    color: white;
+    margin-bottom: 2rem;
+}
+
+.tempButton{
+    background-color: #ab4fe4;
+    width: 8rem;
+    height: 3.5rem;
+    border: none;
+    color: white;
+    margin-bottom: 2rem;
+}
+
+
+
+
+
+
+
+
 
 .submitFinalButton{
     background-color: #a10922;
@@ -246,6 +342,7 @@ input[type="text"], .input{
 
 .full__row{
     width: 100%;
+    margin-top: 1rem;
 }
 
 .inputContainerCheckbox{

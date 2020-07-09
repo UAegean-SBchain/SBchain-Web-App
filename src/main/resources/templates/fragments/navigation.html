@@ -1,0 +1,24 @@
+<div th:fragment="navigation">
+   
+     <div class="row button__row">
+         <div class="col">
+             <div class="backButton">
+                <a th:href="@{'back?uuid='+${uuid}}" th:text="#{back}" class="nextLink">Next</a>
+            </div>
+             
+         </div>
+            
+         <div class="col">
+             <div class="tempButton" style="margin-left: 1rem;">
+                <a  th:text="#{save}" class="nextLink" onclick="tempSave()">save</a>
+            </div>
+             
+         </div>
+     </div>
+    
+     
+    
+    
+</div>
+
+

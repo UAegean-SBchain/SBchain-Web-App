@@ -9,6 +9,8 @@
     <div th:replace="fragments/header"></div>
     <div class="container">
     <!-- <form method="post" action="#" th:action="@{/amounts/save}" th:object="${calculatedAmounts}" id="infoForm"> -->
+        <div th:replace="fragments/navigation"></div>  
+    
         <h4 th:text="#{amounts.title}" class="formTitle">Personal Info</h4>
             <hr class="divider--light">
         <div class="row__container"> 
@@ -35,15 +37,16 @@
 
         </div>
         <div class="row button__row">
-            <div class="fetchButton">
-                <a th:href="@{'/amounts/results?uuid='+${uuid}}" th:text="#{fetch.info}" class="fetchLink">Fetch Info</a>
-            </div>
+<!--            <div class="fetchButton">
+                <a th:href="@{'/multi/amounts/results?uuid='+${uuid}}" th:text="#{fetch.info}" class="fetchLink">Fetch Info</a>
+            </div>-->
             <div class="submitFinalButton">
-                <a th:href="@{'/amounts/save?uuid='+${uuid}}" th:text="#{submit}" class="submitFinal">Fetch Info</a>
+                <a onclick="saveFinal()" th:text="#{submit}" class="submitFinal">Fetch Info</a>
             </div>
         </div>
     <!-- </form> -->
     </div>
+    <div th:replace="fragments/footer"></div>
     <script type="text/javascript" src="../static/js/navigation.js" th:src="@{/js/navigation.js}"></script>
 </body>
 </html>

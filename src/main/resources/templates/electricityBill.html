@@ -9,7 +9,8 @@
     <div th:replace="fragments/header"></div>
     <div class="container">
     <!-- <form method="post" action="#" th:action="@{/residenceInfo/save}" th:object="${ssiInformation}" id="infoForm"> -->
-        
+        <div th:replace="fragments/navigation"></div>
+    
         <div class="formTitleContainer">
             <h4 th:text="#{power.supply.info.title}" class="formTitle">power Supply</h4>
             <div class="infoButton" th:text="i" id="powerInfoButton">i</div>
@@ -27,14 +28,42 @@
                 </ul>
             </div>
         </div>
-        <div class="row__container"> 
+        <div class="row__container">
+            <div class="row full__row">
+                <div class="inputContainer inputContainer--big">
+                    <label th:text="#{ownership}" class="label checkBox__label label--right"> Ownership </label>
+                    <div class="inputContainerCheckbox">
+                        <input type="text" id="ownershipMain" th:value="${ssiInfo != null}? ${ssiInfo[ownership]}" readonly hidden="true">
+                        <div class="checkboxContainer ownership__checkboxContainer " id="ownerBoxContainer">
+                            <input type="checkbox" id="owned" class="checkBox ownership__checkBox ownerBox" th:value="${false}" disabled>
+                            <label th:text="#{owner}" class="label checkBox__label label--right"> Owner </label>
+                        </div>  
+                        <div class="checkboxContainer ownership__checkboxContainer" id="rentBoxContainer">
+                            <input type="checkbox" id="rent" class="checkBox ownership__checkBox rentBox" th:value="${false}" disabled>
+                            <label th:text="#{rent}" class="label checkBox__label label--right"> Rent </label>
+                        </div>
+                        <div class="checkboxContainer ownership__checkboxContainer" id="freeBoxContainer">
+                            <input type="checkbox" id="free" class="checkBox ownership__checkBox freeBox" th:value="${false}" disabled>
+                            <label th:text="#{free.residency}" class="label checkBox__label label--right"> Free residency </label>
+                        </div>
+                        <div class="checkboxContainer ownership__checkboxContainer " id="guestBoxContainer">
+                            <input type="checkbox" id="guest" class="checkBox ownership__checkBox guestBox" th:value="${false}" disabled>
+                            <label th:text="#{guest}" class="label checkBox__label label--right"> guest </label>
+                        </div>
+                        <div class="checkboxContainer ownership__checkboxContainer" id="homelessBoxContainer">
+                            <input type="checkbox" id="homeless" class="checkBox ownership__checkBox homelessBox" th:value="${false}" disabled>
+                            <label th:text="#{homeless}" class="label checkBox__label label--right"> homeless </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row full__row">
                 <div class="inputContainer inputContainer--full">
                     <label th:text="#{power.supply}" class="label checkBox__label label--right"> Power Supply </label>
                     <div class="inputContainerCheckbox">
                         <input type="text" id="powerMain" th:value="${ssiInfo != null}? ${ssiInfo[supplyType]}" readonly hidden="true">
                         <div class="checkboxContainer power__checkboxContainer " id="deddieBoxContainer">
-                            <input type="checkbox" id="deddie" class="checkBox power__checkBox ownerBox" th:value="${false}" disabled>
+                            <input type="checkbox" id="power" class="checkBox power__checkBox ownerBox" th:value="${false}" disabled>
                             <label th:text="#{deddie}" class="label checkBox__label label--right"> DEDDIE </label>
                         </div>  
                         <div class="checkboxContainer power__checkboxContainer" id="settlementBoxContainer">
@@ -53,23 +82,31 @@
                 </div>
             </div>
         </div>
-        <div class="row triplecol__row">
+<!--        <div class="row triplecol__row">
             <div class="inputContainer inputContainer--big">
                 <label th:text="#{meter.number}" class="label input__label"> Residence Type </label>
                 <input type="text" class="input residence__input input--big" th:value="${ssiInfo != null}? ${ssiInfo[meterNumber]}" readonly/>
             </div>
-        </div>
+        </div>-->
 
         <div class="row button__row">
-            <div class="fetchButton">
-                <a th:href="@{'/electricityBill/results?uuid='+${uuid}}" th:text="#{fetch.info}" class="fetchLink">Fetch Info</a>
+<!--            <div class="fetchButton">
+                <a th:href="@{'/multi/electricityBill/results?uuid='+${uuid}}" th:text="#{fetch.info}" class="fetchLink">Fetch Info</a>
+            </div>-->
+<!--            <div class="submitButton">
+                <a th:href="@{'/multi/electricityBill/save?uuid='+${uuid}}" th:text="#{next}" class="nextLink">Fetch Info</a>
+            </div>-->
+            <div class="submitButton" th:if="${ssiInfo.completed}">
+                <a th:href="@{'/multi/electricityBill/nextCompleted?uuid='+${uuid}}" th:text="#{next}" class="nextLink">Next</a>
             </div>
-            <div class="submitButton">
-                <a th:href="@{'/electricityBill/save?uuid='+${uuid}}" th:text="#{next}" class="nextLink">Fetch Info</a>
-            </div>
+
+            <div class="submitButton" th:unless="${ssiInfo.completed}">
+                <a th:href="@{'/multi/electricityBill/continue?uuid='+${uuid}}" th:text="#{next}" class="nextLink">Next</a>
+            </div> 
         </div>
     <!-- </form> -->
     </div>
+    <div th:replace="fragments/footer"></div>
     <script type="text/javascript" src="../static/js/infoText.js" th:src="@{/js/infoText.js}"></script>
     <script type="text/javascript" src="../static/js/navigation.js" th:src="@{/js/navigation.js}"></script>
     <script type="text/javascript">

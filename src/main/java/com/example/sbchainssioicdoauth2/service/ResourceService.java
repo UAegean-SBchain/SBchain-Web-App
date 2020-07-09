@@ -26,7 +26,6 @@ public class ResourceService {
         HttpEntity<?> entity = new HttpEntity<Object>(requestHeaders);
         RestTemplate restTemplate = new RestTemplate();
         String result = restTemplate.exchange(uri, HttpMethod.GET, entity, String.class).getBody();
-        log.info("cccccccccccccccccccc result :{}", result);
         return result;
     }
 
@@ -60,10 +59,6 @@ public class ResourceService {
         ResponseEntity<Map<String, Object>> responseEntity = restTemplate.exchange(uri, HttpMethod.GET, entity, responseType);
         
         return responseEntity.getBody();
-
-        // String result = restTemplate.exchange(uri, HttpMethod.GET, entity, String.class).getBody();
-        // log.info("cccccccccccccccccccc result :{}", result);
-        // return result;
     }
 
     

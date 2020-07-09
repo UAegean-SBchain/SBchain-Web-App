@@ -9,21 +9,13 @@
 <body>
     <div th:replace="fragments/header"></div>
     <div class="container">
-        <div class="row">
-            <h4 th:text="#{landing.info.title}" class="formTitle">Landing Title</h4>
-         <h2 th:text="#{landing.info.subtitle}" class="formTitle">Landing subTitle</h2>
-                <hr class="divider--light">
-           
+        <div class="errorMsgContainer">
+            <div th:text="${title}" class="errorTitle">test</div>
+            <div th:text="${message}" class="errorMessage">test</div>
         </div>
-        <div class="row">
-            <div  style="margin: 2rem 2rem 3rem 0rem;" th:text="#{landing.info.explanation}"></div>
-        </div>
-        <div class="row">
-             <div class="submitButton">
-                <a th:href="@{'/multi/personalInfo/view?uuid='+${uuid}}" th:text="#{start}" class="nextLink">Fetch Info</a>
+            <div class="submitButton">
+                <a th:href="@{/logout}" th:text="#{logout.and.return.error}" id="errorLogoutButton" >SSI</a>
             </div>
-        </div>
-         
         <!-- </form> -->
     </div>
     <script type="text/javascript" src="../static/js/main.js" th:src="@{/js/main.js}"></script>

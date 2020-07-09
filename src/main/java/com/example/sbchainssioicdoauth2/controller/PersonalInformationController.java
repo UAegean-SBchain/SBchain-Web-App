@@ -1,21 +1,19 @@
 package com.example.sbchainssioicdoauth2.controller;
 
-import java.util.Map;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import com.example.sbchainssioicdoauth2.model.entity.SsiApplication;
 import com.example.sbchainssioicdoauth2.service.CacheService;
 import com.example.sbchainssioicdoauth2.service.PopulateInfoService;
 import com.example.sbchainssioicdoauth2.service.ResourceService;
 import com.example.sbchainssioicdoauth2.utils.FormType;
-
-import org.keycloak.KeycloakSecurityContext;
+import com.example.sbchainssioicdoauth2.utils.LogoutUtils;
+import java.beans.IntrospectionException;
+import java.lang.reflect.InvocationTargetException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,8 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
@@ -40,58 +36,44 @@ public class PersonalInformationController {
     @Autowired
     PopulateInfoService infoService;
 
-    private static final String SSI_REQUEST_PARAMS = "ssiInformation";
+    private final static Logger log = LoggerFactory.getLogger(PersonalInformationController.class);
 
     @GetMapping("/view")
-    protected ModelAndView personalInfo(@AuthenticationPrincipal OidcUser oidcUser, @RequestParam(value = "uuid", required = true) String uuid, ModelMap model, HttpServletRequest request) {
-
+    protected ModelAndView personalInfo(@RequestParam(value = "uuid", required = true) String uuid, ModelMap model, HttpServletRequest request) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, IntrospectionException {
         model.addAttribute("uuid", uuid);
-        return new ModelAndView("personalInfo");
-    }
-
-    @GetMapping("/results")
-    protected ModelAndView personalInfoResults(@AuthenticationPrincipal OidcUser oidcUser, @RequestParam(value = "uuid", required = true) String uuid, ModelMap model, HttpServletRequest request) {
-        
-        KeycloakSecurityContext context = (KeycloakSecurityContext) request.getAttribute(KeycloakSecurityContext.class.getName());
-        
-        // String something = resourceService.getSomething(context);
-        // Map<String, Object> personalInfo = resourceService.getPersonalInfo(context);
-        // Map<String, Object> claims = resourceService.getClaims(context);
-        // log.info("ddddddddddddddddddddddddd something string :{}", something);
-        // log.info("zzzzzzzzzzzzzzzzzzzzzz personal info :{}",  personalInfo);
-        // log.info("ccccccccccccccccccccccc claims ? :{}",  claims);
-        // log.info("eeeeeeeeeeeeeeeeeeeeeee otherclaims :{}", context.getIdToken().getOtherClaims());
-       
-        // log.info("gggggggggggggggggggg attributes :{}", oidcUser.getAttributes());
-        // params.setSsiInfo(oidcUser.getAttributes());
-        // model.addAttribute("ssiInfo", oidcUser.getAttributes());
-        model.addAttribute("ssiInfo", context.getIdToken().getOtherClaims());
-        model.addAttribute("uuid", uuid);
-
-        return new ModelAndView("personalInfo");
-    }
-
-    @GetMapping("/save")
-    protected ModelAndView personalInfoSubmit(@AuthenticationPrincipal OidcUser oidcUser, RedirectAttributes attr, @RequestParam(value = "uuid", required = true) String uuid, ModelMap model, HttpServletRequest request, HttpSession session) {
-
-        // model.addAttribute("userAttr", oidcUser.getAttributes());
-        
-        attr.addAttribute("uuid", uuid);
-        KeycloakSecurityContext context = (KeycloakSecurityContext) request.getAttribute(KeycloakSecurityContext.class.getName());
-        
-        log.info("ppppppppppppppppppppppppppp uuid :{}", uuid);
-        SsiApplication ssiApp = new SsiApplication();
-        infoService.populateSsiApp(ssiApp, context, FormType.PERSONAL_INFO.value, uuid);
+        infoService.populateFetchInfo(model, request, uuid);
+        SsiApplication ssiApp = cacheService.get(uuid);
+        infoService.populateSsiApp(ssiApp, request, FormType.PERSONAL_DECLARATION.value, uuid);
+        infoService.mergeModelFromCache(ssiApp, model, request);
         cacheService.putInfo(ssiApp, uuid);
+        return new ModelAndView("personalInfo");
+    }
 
-        
-        try {
-            request.logout();
-        } catch (ServletException e) {
-            log.error(e.getMessage());
-        }
+////    @PreAuthorize("hasAuthority('personal_info')")
+//    @GetMapping("/results")
+//    protected ModelAndView personalInfoResults(@RequestParam(value = "uuid", required = true) String uuid, ModelMap model,
+//            HttpServletRequest request) {
+//
+//        infoService.populateFetchInfo(model, request, uuid);
+//        KeycloakSecurityContext context = (KeycloakSecurityContext) request.getAttribute(KeycloakSecurityContext.class.getName());
+//        context.getIdToken().getOtherClaims();
+//
+//        return new ModelAndView("personalInfo");
+//    }
+//    @PreAuthorize("hasAuthority('personal_info')")
+    @GetMapping("/continue")
+    protected ModelAndView personalInfoSubmit(RedirectAttributes attr, @RequestParam(value = "uuid", required = true) String uuid,
+            ModelMap model, HttpServletRequest request, HttpSession session) {
 
-        return new ModelAndView("redirect:/multi/disqualifyingCrit/view");
+        SsiApplication ssiApp = cacheService.get(uuid);
+        LogoutUtils.forceRelogIfNotCondition(request, ssiApp.getHospitalized());
+        return new ModelAndView("redirect:/multi/disqualifyingCrit/view?uuid=" + uuid);
+    }
+
+    @GetMapping("/nextCompleted")
+    protected ModelAndView nextComplete(RedirectAttributes attr, @RequestParam(value = "uuid", required = true) String uuid,
+            ModelMap model, HttpServletRequest request, HttpSession session) {
+        return new ModelAndView("redirect:/multi/disqualifyingCrit/view?uuid=" + uuid);
     }
 
 }

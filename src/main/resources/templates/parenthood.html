@@ -10,13 +10,15 @@
     <div th:replace="fragments/header"></div>
     <div class="container">
         <!-- <form method="post" action="#" th:action="@{/parenthood/save}" th:object="${parenthoodInfo}" id="infoForm"> -->
-            <div class="formTitleContainer">
+       <div th:replace="fragments/navigation"></div>
+        
+        <div class="formTitleContainer">
                 <h2 th:text="#{parenthood.title}" class="formTitle">Disqualifying Criteria</h2>
             </div>
             <hr class="divider--light">
             <div class="row__container"> 
                 <div class="row triplecol__row row--smallcol">
-                    <input type="text" th:value="${ssiInfo != null}? ${parenthood}" class="mainBox" hidden="true" readonly>
+                    <input type="text" th:value="${ssiInfo != null}? ${ssiInfo[parenthood]}" class="mainBox" hidden="true" readonly>
                     <div class="checkboxContainer checkboxContainer--false">
                         <input type="checkbox" id="falseBox" class="checkBox disqCrit__checkBox falseBox" th:value="${false}" disabled >
                         <label th:text="#{no}" class="label checkBox__label label--right"> No </label>
@@ -32,20 +34,32 @@
                 <div class="row doublecol__row">
                     <div class="inputContainer inputContainer--big">
                         <label th:text="#{custody}" class="label input__label"> custody </label>
-                        <input type="text" class="input personalInfo__input input--big" th:value="${ssiInfo != null}? ${custody}" readonly/>
+                        <input type="text" class="input personalInfo__input input--big" th:value="${ssiInfo != null}? ${ssiInfo[custody]}" readonly/>
                     </div>
                     <div class="inputContainer inputContainer--big">
                         <label th:text="#{additional.adults}" class="label input__label"> Additional Adults </label>
-                        <input type="text" class="input personalInfo__input input--big" th:value="${ssiInfo != null}? ${additionalAdults}" readonly/>
+                        <input type="text" class="input personalInfo__input input--big" th:value="${ssiInfo != null}? ${ssiInfo[additionalAdults]}" readonly/>
                     </div>
                 </div>
             </div>
-            <div class="submitButton">
-                <a th:href="@{'/parenthood/save?uuid='+${uuid}}" th:text="#{next}" class="nextLink">Fetch Info</a>
+            <div class="row button__row">
+<!--                <div class="fetchButton">
+                    <a th:href="@{'/multi/parenthood/results?uuid='+${uuid}}" th:text="#{fetch.info}" class="fetchLink">Fetch Info</a>
+                </div>-->
+<!--                <div class="submitButton">
+                    <a th:href="@{'/multi/parenthood/save?uuid='+${uuid}}" th:text="#{next}" class="nextLink">Fetch Info</a>
+                </div>-->
+            <div class="submitButton" th:if="${ssiInfo.completed}">
+                <a th:href="@{'/multi/parenthood/nextCompleted?uuid='+${uuid}}" th:text="#{next}" class="nextLink">Next</a>
+            </div>
+
+            <div class="submitButton" th:unless="${ssiInfo.completed}">
+                <a th:href="@{'/multi/parenthood/continue?uuid='+${uuid}}" th:text="#{next}" class="nextLink">Next</a>
+            </div> 
             </div>
         <!-- </form> -->
     </div>
-
+    <div th:replace="fragments/footer"></div>
     <script type="text/javascript" src="../static/js/main.js" th:src="@{/js/main.js}"></script>
     <script type="text/javascript" src="../static/js/infoText.js" th:src="@{/js/infoText.js}"></script>
     <script type="text/javascript" src="../static/js/navigation.js" th:src="@{/js/navigation.js}"></script>

@@ -2,13 +2,11 @@ package com.example.sbchainssioicdoauth2.model.entity;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import org.springframework.data.annotation.Id;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.data.annotation.Id;
 
 @ToString
 @Getter
@@ -23,15 +21,20 @@ public class SsiApplication {
 
     //personal info
     private String ssn;
-    private String afm;
-    private String surname;
-    private String name;
-    private String fatherName;
-    private String motherName;
-    private String latinSurname;
-    private String latinName;
-    private String latinFatherName;
-    private String latinMotherName;
+    private String taxisAfm;
+    private String taxisFamilyName;
+    private String taxisFirstName;
+    private String taxisFathersName;
+    private String taxisMothersName;
+    private String taxisFamilyNameLatin;
+    private String taxisFirstNameLatin;
+    private String taxisFathersNameLatin;
+    private String taxisMothersNameLatin;
+    private String taxisAmka;
+    private String taxisDateOfBirth;
+    private String taxisGender;
+    private String nationality;
+    private String maritalStatus;
 
     //personal declaration
     private String hospitalized;
@@ -54,16 +57,14 @@ public class SsiApplication {
     private String selectProvider;
 
     //demographic info
-    private String dateOfBirth;
     private String gender;
-    private String nationality;
-    private String maritalStatus;
     private String disabilityStatus;
     private String levelOfEducation;
 
     //employment info
     private String employmentStatus;
     private String unemployed;
+    private String employed;
     private String oaedId;
     private String oaedDate;
 
@@ -96,14 +97,20 @@ public class SsiApplication {
     private String foreignRealEstateA;
     private String vehicleValueA;
     private String investmentsA;
-    
+
     //household composition
-    private Map<String, String> householdComposition = new HashMap<>();
+    private Map<String, String>[] householdComposition;
 
     //income guarantee
     private String monthlyGuarantee;
     private String totalIncome;
     private String monthlyIncome;
     private String monthlyAid;
-    
+
+    // helper object
+    private boolean completed;
+
+    //the status of the application
+    private String status;
+
 }

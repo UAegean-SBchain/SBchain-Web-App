@@ -1,10 +1,10 @@
 {
-  "realm": "SSI-SELF",
+  "realm": "SSI-MITRO",
   "auth-server-url": "https://dss1.aegean.gr/auth",
   "ssl-required": "external",
-  "resource": "sbchain-self",
+  "resource": "sbchain-mitro",
   "credentials": {
-    "secret": "8163c64a-834d-4b8c-88be-976055720116"
+    "secret": "34030392-d03e-4322-850f-45aba52c6c2c"
   },
   "confidential-port": 0
 }

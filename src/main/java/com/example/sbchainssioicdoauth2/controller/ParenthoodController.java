@@ -1,60 +1,76 @@
 package com.example.sbchainssioicdoauth2.controller;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-
 import com.example.sbchainssioicdoauth2.model.entity.SsiApplication;
 import com.example.sbchainssioicdoauth2.service.CacheService;
 import com.example.sbchainssioicdoauth2.service.PopulateInfoService;
 import com.example.sbchainssioicdoauth2.utils.FormType;
-
-import org.keycloak.KeycloakSecurityContext;
+import java.beans.IntrospectionException;
+import java.lang.reflect.InvocationTargetException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import lombok.extern.slf4j.Slf4j;
-
 @Slf4j
 @Controller
-@RequestMapping("/parenthood")
+@RequestMapping("/multi/parenthood")
 public class ParenthoodController {
-    
+
     @Autowired
     CacheService cacheService;
-    
+
     @Autowired
     PopulateInfoService infoService;
 
     @GetMapping("/view")
-    protected ModelAndView parenthoodView(@AuthenticationPrincipal OidcUser oidcUser, @RequestParam(value = "uuid", required = true) String uuid, ModelMap model, HttpServletRequest request){
+    protected ModelAndView parenthoodView(@RequestParam(value = "uuid", required = true) String uuid, ModelMap model, HttpServletRequest request) throws IllegalAccessException, IllegalArgumentException, IntrospectionException, InvocationTargetException {
+        model.addAttribute("uuid", uuid);
         infoService.populateFetchInfo(model, request, uuid);
+        SsiApplication ssiApp = cacheService.get(uuid);
+        infoService.populateSsiApp(ssiApp, request, FormType.PERSONAL_DECLARATION.value, uuid);
+        infoService.mergeModelFromCache(ssiApp, model, request);
+        cacheService.putInfo(ssiApp, uuid);
         return new ModelAndView("parenthood");
     }
 
-    @GetMapping("/save")
-    protected ModelAndView parenthoodSave(@AuthenticationPrincipal OidcUser oidcUser, RedirectAttributes attr, @RequestParam(value = "uuid", required = true) String uuid, ModelMap model, HttpServletRequest request){
-        
-        KeycloakSecurityContext context = (KeycloakSecurityContext) request.getAttribute(KeycloakSecurityContext.class.getName());
-        SsiApplication ssiApp = cacheService.get(uuid);
-        infoService.populateSsiApp(ssiApp, context, FormType.PARENTHOOD_INFO.value, uuid);
-        cacheService.putInfo(ssiApp, uuid);
-        attr.addAttribute("uuid", uuid);
+    @GetMapping("/results")
+    protected ModelAndView parenthoodResults(@RequestParam(value = "uuid", required = true) String uuid, ModelMap model, HttpServletRequest request) {
 
-        try {
-            request.logout();
-        } catch (ServletException e) {
-            log.error(e.getMessage());
-        }
-        return new ModelAndView("redirect:/financialInfo/view");
-    
+        infoService.populateFetchInfo(model, request, uuid);
+
+        return new ModelAndView("parenthood");
+
+    }
+
+    @GetMapping("/continue")
+    protected ModelAndView parenthoodSave(RedirectAttributes attr, @RequestParam(value = "uuid", required = true) String uuid, ModelMap model, HttpServletRequest request) {
+//        try {
+//            request.logout();
+//        } catch (ServletException e) {
+//            log.error(e.getMessage());
+//        }
+//        return new ModelAndView("redirect:/multi/financialInfo/view");
+//        return new ModelAndView("redirect:/multi/residenceInfo/view?uuid=" + uuid);
+        return new ModelAndView("redirect:/multi/amounts/view?uuid=" + uuid);
+
+    }
+
+    @GetMapping("/nextCompleted")
+    protected ModelAndView nextComplete(RedirectAttributes attr, @RequestParam(value = "uuid", required = true) String uuid,
+            ModelMap model, HttpServletRequest request, HttpSession session) {
+        return new ModelAndView("redirect:/multi/amounts/view?uuid=" + uuid);
+    }
+
+    @GetMapping("/back")
+    protected ModelAndView back(RedirectAttributes attr, @RequestParam(value = "uuid", required = true) String uuid,
+            ModelMap model, HttpServletRequest request, HttpSession session) {
+        return new ModelAndView("redirect:/multi/contactDetails/view?uuid=" + uuid);
     }
 }
