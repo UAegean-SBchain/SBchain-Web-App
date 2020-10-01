@@ -19,15 +19,22 @@
         {
             if(xmlhttp.readyState == 4 && xmlhttp.status == 200)
             {
-                alert(xmlhttp.responseText);
+//                alert(xmlhttp.responseText);
+                location.reload();
             }
         }
                 xmlhttp.send(encodeURI('uuid=' + uuid));
 
     }
     
-    function saveFinal()
-    {
+    
+    
+    
+    
+    
+    
+    
+    function saveFinal(){
         let uuid = /*[[${uuid}]]*/ 'default';
         var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
         var theUrl = "/db/save";
@@ -37,11 +44,40 @@
         {
             if(xmlhttp.readyState == 4 && xmlhttp.status == 200)
             {
-                alert(xmlhttp.responseText);
+                let rsp = xmlhttp.responseText;
+                if(rsp ==="OK"){
+                    let issueHref = document.getElementById("issueLink");
+                    let url = /*[[${issueUrl}]]*/ 'default';
+                    issueHref.href= url+"?caseId=uuid";
+                    issueHref.style["background-color"]="#006700bb";
+                }
+                
+                let mContainer = document.getElementById("messageContainer");
+//                console.log("response is :")
+//                console.log(rsp)
+                if(rsp ==="DBFAIL"){
+                  let ms =   /*[[#{failDBMessage}]]*/ 'default';
+                  mContainer.innerText = ms;
+                  mContainer.style.display = "block";
+                }
+                
+                if(rsp ==="FAIL"){
+                    let ms =   /*[[#{failMessage}]]*/ 'default';
+                    console.log("will set the div to " + ms);
+                    mContainer.innerText = ms;
+                    mContainer.style.display = "block";
+
+                }
+//                  location.reload();
             }
+            
+            document.getElementById("saveButton").href=null;
+
         }
                 xmlhttp.send(encodeURI('uuid=' + uuid));
+
     }
+   
     /*]]>*/
     </script>
     

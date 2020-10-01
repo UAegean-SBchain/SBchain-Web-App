@@ -37,7 +37,7 @@ public class ContactDetailsController {
         infoService.populateFetchInfo(model, request, uuid);
         SsiApplication ssiApp = cacheService.get(uuid);
         infoService.populateSsiApp(ssiApp, request, FormType.PERSONAL_DECLARATION.value, uuid);
-        infoService.mergeModelFromCache(ssiApp, model, request);
+        ssiApp = infoService.updateModelfromCacheMergeDB(ssiApp, model, request, uuid);
         cacheService.putInfo(ssiApp, uuid);
         return new ModelAndView("contactDetails");
     }
@@ -55,7 +55,7 @@ public class ContactDetailsController {
     @GetMapping("/continue")
     protected ModelAndView contactDetailsSave(RedirectAttributes attr, @RequestParam(value = "uuid", required = true) String uuid, ModelMap model, HttpServletRequest request) {
         SsiApplication ssiApp = cacheService.get(uuid);
-        LogoutUtils.forceRelogIfNotCondition(request, ssiApp.getParenthood());
+        LogoutUtils.forceRelogIfNotCondition(request, ssiApp.getGender());
         return new ModelAndView("redirect:/multi/parenthood/view?uuid=" + uuid);
 
     }

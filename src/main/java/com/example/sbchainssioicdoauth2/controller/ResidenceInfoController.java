@@ -36,7 +36,7 @@ public class ResidenceInfoController {
         infoService.populateFetchInfo(model, request, uuid);
         SsiApplication ssiApp = cacheService.get(uuid);
         infoService.populateSsiApp(ssiApp, request, FormType.PERSONAL_DECLARATION.value, uuid);
-        infoService.mergeModelFromCache(ssiApp, model, request);
+        ssiApp = infoService.updateModelfromCacheMergeDB(ssiApp, model, request, uuid);
         cacheService.putInfo(ssiApp, uuid);
         return new ModelAndView("residenceInfo");
     }

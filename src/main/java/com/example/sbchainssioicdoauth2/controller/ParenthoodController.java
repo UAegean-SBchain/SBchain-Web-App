@@ -35,8 +35,13 @@ public class ParenthoodController {
         infoService.populateFetchInfo(model, request, uuid);
         SsiApplication ssiApp = cacheService.get(uuid);
         infoService.populateSsiApp(ssiApp, request, FormType.PERSONAL_DECLARATION.value, uuid);
-        infoService.mergeModelFromCache(ssiApp, model, request);
+        ssiApp = infoService.updateModelfromCacheMergeDB(ssiApp, model, request, uuid);
         cacheService.putInfo(ssiApp, uuid);
+
+        model.addAttribute("isMale", ssiApp.getGender().equals("male"));
+        model.addAttribute("isFemale", ssiApp.getGender().equals("female"));
+        model.addAttribute("singleParent", ssiApp.getParenthood().equals("true"));
+
         return new ModelAndView("parenthood");
     }
 

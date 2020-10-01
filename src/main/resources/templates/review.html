@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{residence.info.title}">Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../static/css/main.css" th:href="@{/css/main.css}"/>
+    
+</head>
+<body>
+    <div th:replace="fragments/header"></div>
+    <div class="container">
+        <div class="row">
+            <h4 th:text="#{landing.info.title}" class="formTitle">Landing Title</h4>
+         <h2 th:text="#{landing.info.subtitle}" class="formTitle">Landing subTitle</h2>
+                <hr class="divider--light">
+           
+ 
+ 
+        <div class="row__container"> 
+        
+            <div th:if="${applications.size() >0}">
+                <table class="table applicationsTable" >
+                    <thead>
+                        <tr>
+                            <th class="tableHeader householdHeader householdHeader--number" th:text="'#'"></th>
+                            <th class="tableHeader householdHeader householdHeader--member" th:text="#{review.id}"></th>
+                            <th class="tableHeader householdHeader householdHeader--relation" th:text="#{review.status}"></th>
+                            <th class="tableHeader householdHeader householdHeader--relation" th:text="#{review.actions}"></th>
+                        </tr>
+                    </thead>
+                    <tbody th:if="${applications}" >
+                        <tr th:each="app , counter : ${applications}">
+                            <td class="column column__3" th:text="${counter.count}"></td>
+                            <td class="column column__3" th:text="${app.uuid}"></td>
+                            <td class="column column__3" th:text="${app.status}"></td>
+                            <td class="column column__3" >
+                                <div class="row button__row">
+                                    <div class="submitButton" >
+                                        <a th:href="@{'/multi/personalInfo/view?uuid='+${app.uuid}}" th:text="#{review.review}" class="nextLink">Next</a>
+                                    </div>
+                                    
+                                        <div class="submitButton-delete" style="margin-left: 1rem;">
+                                           <a  th:href="'#'" th:text="#{delete}" class="nextLink" th:attr="onclick=|del('${app.uuid}')|">save</a>
+                                               
+                                       </div>
+
+                                    
+                                </div>
+                            </td>
+                        </span>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
+            
+            
+        
+        <div class="row button__row"  th:if="${newEnabled}">
+            <div class="submitButton" >
+                <a th:href="@{'/multi/personalInfo/view'}" th:text="#{review.new}" class="nextLink">Next</a>
+            </div> 
+        </div>
+         
+        <!-- </form> -->
+    </div>
+    <script type="text/javascript" src="../static/js/main.js" th:src="@{/js/main.js}"></script>
+    <script type="text/javascript" src="../static/js/infoText.js" th:src="@{/js/infoText.js}"></script>
+    <script type="text/javascript" src="../static/js/navigation.js" th:src="@{/js/navigation.js}"></script>
+    
+    
+        <script th:inline="javascript">
+    /*<![CDATA[*/
+    function del(uuid)
+    {
+        var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+        var theUrl = "/db/delete";
+        xmlhttp.open("POST", theUrl);
+        xmlhttp.setRequestHeader("Content-Type", 'application/x-www-form-urlencoded');
+        xmlhttp.onreadystatechange = function()
+        {
+            if(xmlhttp.readyState == 4 && xmlhttp.status == 200)
+            {
+               location.reload();
+            }
+        }
+                xmlhttp.send(encodeURI('uuid=' + uuid));
+
+    }
+     
+    /*]]>*/
+    </script>
+
+</body>
+</html>

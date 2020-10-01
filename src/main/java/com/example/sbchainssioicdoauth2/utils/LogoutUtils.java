@@ -18,7 +18,6 @@ import org.slf4j.LoggerFactory;
 @Slf4j
 public class LogoutUtils {
 
-    private final static Logger log = LoggerFactory.getLogger(LogoutUtils.class);
 
     public static void forceRelogIfNotCondition(HttpServletRequest request, Object controlObject) {
         if (controlObject == null) {

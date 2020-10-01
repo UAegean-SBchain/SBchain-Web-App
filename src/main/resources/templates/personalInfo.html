@@ -15,10 +15,10 @@
             <hr class="divider--light">
         <div class="row__container"> 
             <div class="row doublecol__row">
-                <div class="inputContainer inputContainer--big">
+<!--                <div class="inputContainer inputContainer--big">
                     <label th:text="#{ssn}" class="label input__label"> AMKA </label>
                     <input type="text" class="input personalInfo__input input--big" th:value="${ssiInfo != null}? ${ssiInfo[taxisAmka]} : ''" />
-                </div>
+                </div>-->
                 <div class="inputContainer inputContainer--big">
                     <label th:text="#{afm}" class="label input__label"> AFM </label>
                     <input type="text" class="input personalInfo__input input--big" th:value="${ssiInfo != null}? ${ssiInfo[taxisAfm]} : ''" readonly/>
@@ -44,7 +44,7 @@
                     <input type="text" class="input personalInfo__input input--big" th:value="${ssiInfo != null}? ${ssiInfo[taxisMothersName]} : ''" readonly/>
                 </div>
             </div>
-            <div class="row doublecol__row">
+<!--            <div class="row doublecol__row">
                 <div class="inputContainer inputContainer--big">
                     <label th:text="#{last.name.latin}" class="label input__label"> Last Name (Latin)</label>
                     <input type="text" class="input personalInfo__input input--big" th:value="${ssiInfo != null}? ${ssiInfo[taxisFamilyNameLatin]} : ''" readonly/>
@@ -53,8 +53,8 @@
                     <label th:text="#{first.name.latin}" class="label input__label"> First Name (Latin) </label>
                     <input type="text" class="input personalInfo__input input--big" th:value="${ssiInfo != null}? ${ssiInfo[taxisFirstNameLatin]} : ''" readonly/>
                 </div>
-            </div>
-            <div class="row doublecol__row">
+            </div>-->
+<!--            <div class="row doublecol__row">
                 <div class="inputContainer inputContainer--big">
                     <label th:text="#{father.name.latin}" class="label input__label"> Name of Father(Latin) </label>
                     <input type="text" class="input personalInfo__input input--big" th:value="${ssiInfo != null}? ${ssiInfo[taxisFathersNameLatin]} : ''" readonly/>
@@ -63,7 +63,7 @@
                     <label th:text="#{mother.name.latin}" class="label input__label"> Name of Mother(Latin) </label>
                     <input type="text" class="input personalInfo__input input--big" th:value="${ssiInfo != null}? ${ssiInfo[taxisMothersNameLatin]} : ''" readonly/>
                 </div>
-            </div>
+            </div>-->
             <div class="row doublecol__row">
                 <div class="inputContainer inputContainer--big">
                     <label th:text="#{date.of.birth}" class="label input__label"> Date of Birth </label>
@@ -79,7 +79,7 @@
                     </div>
                 </div>
                 <div class="inputContainer inputContainer--big">
-                    <label th:text="#{gender}" class="label checkBox__label label--right"> Gender </label>
+<!--                    <label th:text="#{gender}" class="label checkBox__label label--right"> Gender </label>
                     <div class="inputContainerCheckbox inputContainerInfo">
                         <input type="text" id="genderMain" th:value="${ssiInfo != null}? ${ssiInfo[taxisGender]}" readonly hidden="true">
                         <div class="checkboxContainer gender__checkboxContainer " id="maleBoxContainer">
@@ -93,14 +93,14 @@
                         <div class="infoButton__wrapper">
                             <div class="infoButton input__info" th:text="i" >i</div>
                         </div>
-                    </div>
+                    </div>-->
                     <div class="infoTextBox" style="display:none;">
                         <div class="inftoTextContainer" th:text="#{personal.info.info.text}">
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row doublecol__row">
+<!--            <div class="row doublecol__row">
                 <div class="inputContainer inputContainer--big">
                     <label th:text="#{nationality}" class="label input__label"> Nationality </label>
                     <div class="inputContainerInfo">
@@ -118,7 +118,7 @@
                     <label th:text="#{marital.status}" class="label input__label"> Marital Status </label>
                     <input type="text" class="input personalInfo__input input--big"  th:value="${ssiInfo != null}? ${ssiInfo[maritalStatus]}" readonly>
                 </div>
-            </div>
+            </div>-->
             <div class="row doublecol__row">
                 <div class="inputContainer inputContainer--big">
                     <label th:text="#{disability.status}" class="label input__label"> Disability Status</label>
@@ -141,11 +141,9 @@
             
 <!--            <span th:if="${ssiInfo[completed]}"></span>
             <span th:unless="${teacher.gender == 'F'}">Male</span>-->
-            <div class="submitButton" th:if="${ssiInfo.completed}">
-                <a th:href="@{'/multi/personalInfo/nextCompleted?uuid='+${uuid}}" th:text="#{next}" class="nextLink">Next</a>
-            </div>
+            
 
-            <div class="submitButton" th:unless="${ssiInfo.completed}">
+            <div class="submitButton" >
                 <a th:href="@{'/multi/personalInfo/continue?uuid='+${uuid}}" th:text="#{next}" class="nextLink">Next</a>
             </div> 
 

@@ -107,11 +107,8 @@
 <!--                <div class="submitButton">
                     <a th:href="@{'/multi/disqualifyingCrit/continue?uuid='+${uuid}}" th:text="#{next}" class="nextLink">Fetch Info</a>
                 </div>-->
-                             <div class="submitButton" th:if="${ssiInfo.completed}">
-                <a th:href="@{'/multi/disqualifyingCrit/nextCompleted?uuid='+${uuid}}" th:text="#{next}" class="nextLink">Next</a>
-            </div>
-
-            <div class="submitButton" th:unless="${ssiInfo.completed}">
+                          
+            <div class="submitButton" >
                 <a th:href="@{'/multi/disqualifyingCrit/continue?uuid='+${uuid}}" th:text="#{next}" class="nextLink">Next</a>
             </div> 
 

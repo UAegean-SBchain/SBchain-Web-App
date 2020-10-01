@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
 import org.springframework.security.core.session.SessionRegistryImpl;
@@ -44,42 +45,42 @@ public class KeycloakSecurityConfig extends KeycloakWebSecurityConfigurerAdapter
     }
 
     @Override
+    public void configure(final WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/rest/nonce");
+    }
+
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
         super.configure(http);
         http
+                .csrf().disable().cors()
+                .and()
                 .authorizeRequests()
-                .antMatchers("/multi/personalInfo/*").hasRole("personal_info")
-                .antMatchers("/multi/disqualifyingCrit/*").hasRole("personal_info")
-                .antMatchers("/multi/employment/*").hasRole("personal_info")
-                .antMatchers("/multi/financialInfo/*").hasRole("personal_info")
-                .antMatchers("/multi/assetInfo/*").hasRole("personal_info")
-                .antMatchers("/multi/householdInfo/*").hasRole("personal_info")
-                .antMatchers("/multi/electricityBill/*").hasRole("personal_info")
-                .antMatchers("/multi/residenceInfo/*").hasRole("personal_info")
-                .antMatchers("/multi/contactDetails/*").hasRole("personal_info")
-                .antMatchers("/multi/parenthood/*").hasRole("personal_info")
-                .antMatchers("/multi/fead/*").hasRole("personal_info")
-                .antMatchers("/multi/amounts/*").hasRole("personal_info")
-                .antMatchers("/db/*").permitAll()
-                //                .antMatchers("/multi/householdInfo/*").hasRole("household_info")
-
-                .antMatchers("/static/*").permitAll()
+                .antMatchers("/db/**").permitAll()
+                .antMatchers("/static/**").permitAll()
+                .antMatchers("/rest/**").permitAll()
+                .antMatchers("/rest/nonce/**").permitAll()
+                .antMatchers("/multi/review/**").hasRole("personal_info")
+                .antMatchers("/multi/personalInfo/**").hasRole("personal_info")
+                .antMatchers("/multi/disqualifyingCrit/**").hasRole("personal_info")
+                .antMatchers("/multi/employment/**").hasRole("personal_info")
+                .antMatchers("/multi/financialInfo/**").hasRole("personal_info")
+                .antMatchers("/multi/assetInfo/**").hasRole("personal_info")
+                .antMatchers("/multi/householdInfo/**").hasRole("personal_info")
+                .antMatchers("/multi/electricityBill/**").hasRole("personal_info")
+                .antMatchers("/multi/residenceInfo/**").hasRole("personal_info")
+                .antMatchers("/multi/contactDetails/**").hasRole("personal_info")
+                .antMatchers("/multi/parenthood/**").hasRole("personal_info")
+                .antMatchers("/multi/fead/**").hasRole("personal_info")
+                .antMatchers("/multi/amounts/**").hasRole("personal_info")
                 .anyRequest().permitAll()
-                //                .and()
-                //                .logout()
-                //                .invalidateHttpSession(false)
                 .and()
                 .sessionManagement()
                 .sessionFixation().migrateSession()
-                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-                .and()
-                .csrf().disable().cors();
+                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
+
     }
 
-//    @Override
-//    public void configure(WebSecurity web) throws Exception {
-//        web.ignoring().antMatchers("/multi/amounts/*").antMatchers("/static/*");
-//    }
     //request debuger, remove
     // @Override
     // public void configure(WebSecurity web) throws Exception {

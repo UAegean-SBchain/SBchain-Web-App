@@ -1,10 +1,10 @@
 {
-  "realm": "SSI-Taxis",
-  "auth-server-url": "https://e1b07955062c.ngrok.io/auth",
+  "realm": "SSI-FINANCIAL",
+  "auth-server-url": "https://dss1.aegean.gr/auth",
   "ssl-required": "external",
-  "resource": "sbchain-taxis",
+  "resource": "sbchain-financial",
   "credentials": {
-    "secret": "89d53c54-0825-4b29-9b9d-65f621654f92"
+    "secret": "e08b8b7c-269b-4896-81cb-e7c13aad4f7a"
   },
   "confidential-port": 0
 }

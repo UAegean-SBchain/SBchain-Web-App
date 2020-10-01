@@ -83,7 +83,7 @@
                     <div class="inputContainer inputContainer--mid">
                         <label th:text="#{po.number}" class="label input__label"> PO Number </label>
                         <div class="inputContainerInfo">
-                            <input type="text" class="input contactDetails__input input--mid" th:value="${ssiInfo != null}? ${ssiInfo[PO]}" readonly />
+                            <input type="text" class="input contactDetails__input input--mid" th:value="${ssiInfo != null}? ${ssiInfo[po]}" readonly />
                             <div class="infoButton__wrapper">
                                 <div class="infoButton input__info" th:text="i">i</div>
                             </div>
@@ -123,11 +123,9 @@
 <!--            <div class="submitButton">
                 <a th:href="@{'/multi/contactDetails/save?uuid='+${uuid}}" th:text="#{next}" class="nextLink">Fetch Info</a>
             </div>-->
-             <div class="submitButton" th:if="${ssiInfo.completed}">
-                <a th:href="@{'/multi/contactDetails/nextCompleted?uuid='+${uuid}}" th:text="#{next}" class="nextLink">Next</a>
-            </div>
+           
 
-            <div class="submitButton" th:unless="${ssiInfo.completed}">
+            <div class="submitButton" >
                 <a th:href="@{'/multi/contactDetails/continue?uuid='+${uuid}}" th:text="#{next}" class="nextLink">Next</a>
             </div> 
 

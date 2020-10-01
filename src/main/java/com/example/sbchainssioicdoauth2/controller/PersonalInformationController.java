@@ -6,6 +6,7 @@ import com.example.sbchainssioicdoauth2.service.PopulateInfoService;
 import com.example.sbchainssioicdoauth2.service.ResourceService;
 import com.example.sbchainssioicdoauth2.utils.FormType;
 import com.example.sbchainssioicdoauth2.utils.LogoutUtils;
+import com.example.sbchainssioicdoauth2.utils.RandomIdGenerator;
 import java.beans.IntrospectionException;
 import java.lang.reflect.InvocationTargetException;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,12 +41,20 @@ public class PersonalInformationController {
     private final static Logger log = LoggerFactory.getLogger(PersonalInformationController.class);
 
     @GetMapping("/view")
-    protected ModelAndView personalInfo(@RequestParam(value = "uuid", required = true) String uuid, ModelMap model, HttpServletRequest request) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, IntrospectionException {
-        model.addAttribute("uuid", uuid);
+    protected ModelAndView personalInfo(@RequestParam(value = "uuid", required = false) String uuid, ModelMap model, HttpServletRequest request) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, IntrospectionException {
+
+        model.addAttribute("firstPage", true);
+
+        if (StringUtils.isEmpty(uuid)) {
+            uuid = RandomIdGenerator.GetBase36(16);
+        }
+
         infoService.populateFetchInfo(model, request, uuid);
         SsiApplication ssiApp = cacheService.get(uuid);
+        model.addAttribute("uuid", uuid);
+
         infoService.populateSsiApp(ssiApp, request, FormType.PERSONAL_DECLARATION.value, uuid);
-        infoService.mergeModelFromCache(ssiApp, model, request);
+        ssiApp = infoService.updateModelfromCacheMergeDB(ssiApp, model, request, uuid);
         cacheService.putInfo(ssiApp, uuid);
         return new ModelAndView("personalInfo");
     }

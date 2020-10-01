@@ -19,7 +19,10 @@ public class PathBasedKeycloakConfigResolver implements KeycloakConfigResolver {
     @Override
     public KeycloakDeployment resolve(OIDCHttpFacade.Request request) {
 
-        if (request.getRelativePath().equals("/") || request.getRelativePath().equals("/error")) {
+        if (request.getRelativePath().equals("/") || request.getRelativePath().equals("/error")
+                || request.getRelativePath().equals("/rest/nonce") || request.getRelativePath().equals("/rest/isBeneficiary")) { //isBeneficiary
+            //essentially this returns the root configuration, but since these endpoints are not configured in the
+            // springsecurity config class, their access is free.. if this is not included then an error is thrown...
             return KeycloakDeploymentBuilder.build(getClass().getResourceAsStream("/personalinfo-keycloak.json"));
         }
         String path = request.getURI();

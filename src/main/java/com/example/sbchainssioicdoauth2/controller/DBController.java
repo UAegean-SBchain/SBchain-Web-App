@@ -12,7 +12,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -33,10 +32,9 @@ public class DBController {
 
     @PostMapping("/save")
     protected @ResponseBody
-    String save(@AuthenticationPrincipal OidcUser oidcUser, @RequestBody(required = true) String uuid) throws IllegalAccessException, IllegalArgumentException, IntrospectionException, InvocationTargetException {
+    String save(@AuthenticationPrincipal OidcUser oidcUser, @RequestParam(value = "uuid", required = true) String uuid) throws IllegalAccessException, IllegalArgumentException, IntrospectionException, InvocationTargetException {
         SsiApplication ssiApp = cacheService.get(uuid);
-        submitService.submit(ssiApp);
-        return "OK";
+        return submitService.submit(ssiApp);
     }
 
     @PostMapping("/temp")
@@ -44,6 +42,14 @@ public class DBController {
     String tempSave(@AuthenticationPrincipal OidcUser oidcUser, @RequestParam(value = "uuid", required = true) String uuid) throws IllegalAccessException, IllegalArgumentException, IntrospectionException, InvocationTargetException {
         SsiApplication ssiApp = cacheService.get(uuid);
         submitService.temp(ssiApp);
+        return "OK";
+    }
+
+    @PostMapping("/delete")
+    protected @ResponseBody
+    String delete(@AuthenticationPrincipal OidcUser oidcUser, @RequestParam(value = "uuid", required = true) String uuid) throws IllegalAccessException, IllegalArgumentException, IntrospectionException, InvocationTargetException {
+        SsiApplication ssiApp = cacheService.get(uuid);
+        submitService.delete(ssiApp);
         return "OK";
     }
 

@@ -19,9 +19,24 @@
         <div class="row">
             <div  style="margin: 2rem 2rem 3rem 0rem;" th:text="#{landing.info.explanation}"></div>
         </div>
+        
+        <hr class="divider--light">
+        <div class="row">
+            <div  style="margin: 2rem 2rem 1rem 0rem;" th:text="#{landing.info.vc}"></div>
+            
+        </div>
         <div class="row">
              <div class="submitButton">
-                <a th:href="@{'/multi/personalInfo/view?uuid='+${uuid}}" th:text="#{start}" class="nextLink">Fetch Info</a>
+                <a href="https://dss.aegean.gr/sbchain/" th:text="#{issue.vc}" class="nextLink">Fetch Info</a>
+            </div>
+        </div>
+        
+        
+        
+        <hr class="divider--light">
+        <div class="row">
+             <div class="submitButton" style="background-color:#293dce; margin: 2rem 2rem 3rem 0rem;">
+                <a th:href="@{'/multi/review/view?uuid='+${uuid}}" th:text="#{start}" class="nextLink">Fetch Info</a>
             </div>
         </div>
          

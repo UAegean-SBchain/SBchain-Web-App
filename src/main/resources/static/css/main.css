@@ -238,6 +238,9 @@ input[type="text"], .input{
     margin: auto;
 }
 
+
+
+
 .nextLink, nextLink:visited, nextLink:active{
     color: white;
     text-decoration: none;
@@ -268,6 +271,15 @@ input[type="text"], .input{
     border: none;
     color: white;
 }
+
+.submitButton-delete{
+    background-color: #993300;
+    width: 8rem;
+    height: 3.5rem;
+    border: none;
+    color: white;
+}
+
 
 
 .backButton{
@@ -304,10 +316,20 @@ input[type="text"], .input{
     color: white;
 }
 
+
+.issueVCButton{
+    background-color: white;
+    width: 8rem;
+    height: 3.5rem;
+    border: none;
+    color: white;
+    margin-left:2rem
+}
+
 .submitButton:focus {
     outline:none;
-    background-color: #5cb85cbb;
-    border: 0.1rem solid #5cb85cbb;
+    background-color: #2ebd2e;
+    border: 0.1rem solid #2ebd2e;
 }
 
 .submitButton:hover {
