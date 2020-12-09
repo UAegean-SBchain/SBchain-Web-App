@@ -24,26 +24,23 @@ public class TestEthService {
     public void testGetAllCases() {
 
         EthereumService ethServ = new EthereumServiceImpl();
-        Assertions.assertEquals(ethServ.getAllCaseUUID().size() > 0, true);
         ethServ.getAllCaseUUID().stream().forEach(uuid -> {
             System.out.println(uuid);
             System.out.println("the case stat is:");
             System.out.println(ethServ.getCaseByUUID(uuid).get().getState().getValue());
         });
         //fakeuuid
-        Assertions.assertEquals(ethServ.getCaseByUUID("fakeuuid").isPresent(), true);
+        Assertions.assertEquals(ethServ.getCaseByUUID("fakeuuid").isPresent(), false);
     }
 
     @Test
-    public void testAddCase() {
+    public void testAddCaseDelete() {
         EthereumService ethServ = new EthereumServiceImpl();
         Case theCase = new Case();
-        theCase.setIsStudent(false);
-        theCase.setName("caseName");
-        theCase.setUuid("4YLVALU9V5FXMTJS");
+        theCase.setUuid("6YLVALU9V5FXMTJS");
         ethServ.addCase(theCase);
-
-        Assertions.assertEquals(true, true);
+        Assertions.assertEquals(ethServ.getCaseByUUID("6YLVALU9V5FXMTJS").isPresent(), true);
+        ethServ.deleteCaseByUuid("5YLVALU9V5FXMTJS");
 
     }
 
@@ -51,8 +48,6 @@ public class TestEthService {
     public void testUpdateCase() {
         EthereumService ethServ = new EthereumServiceImpl();
         Case theCase = new Case();
-        theCase.setIsStudent(true);
-        theCase.setName("caseName_updated");
         theCase.setUuid("2WiYi8");
         theCase.setState(State.PAID);
 
@@ -60,8 +55,6 @@ public class TestEthService {
         // and once after the transaction has been processed
 //        ethServ.updateCase(theCase);
         Assertions.assertEquals(ethServ.getCaseByUUID("2WiYi8").isPresent(), true);
-        Assertions.assertEquals(ethServ.getCaseByUUID("2WiYi8").get().getIsStudent(), true);
-        Assertions.assertEquals(ethServ.getCaseByUUID("2WiYi8").get().getName(), "caseName_updated");
 
     }
 

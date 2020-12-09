@@ -2,8 +2,6 @@ package com.example.sbchainssioicdoauth2.model.pojo;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.LinkedHashMap;
-import java.util.List;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,13 +12,10 @@ import lombok.ToString;
 @Setter
 @ToString
 @NoArgsConstructor
-public class Case {
+public class CasePayment {
 
-    private String uuid;
-    private LocalDateTime date;
+    private LocalDateTime paymentDate;
+    private BigDecimal payment;
     private State state;
-    private LinkedHashMap<LocalDateTime, State> history;
-    private List<CasePayment> paymentHistory;
-    private BigDecimal offset;
-
+    
 }
