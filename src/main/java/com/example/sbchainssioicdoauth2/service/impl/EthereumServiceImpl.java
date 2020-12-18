@@ -176,7 +176,7 @@ public class EthereumServiceImpl implements EthereumService {
             ZonedDateTime zdt = time.atZone(ZoneId.of("America/Los_Angeles"));
             long millis = zdt.toInstant().toEpochMilli();
             String functionCall = this.getContract()
-                    .addCase(uuid, monitoredCase.getName(), monitoredCase.getIsStudent(), BigInteger.valueOf(millis))
+                    .addCase(uuid,  BigInteger.valueOf(millis))
                     .encodeFunctionCall();
             this.txManager.sendTransaction(DefaultGasProvider.GAS_PRICE, BigInteger.valueOf(1000000),
                     contract.getContractAddress(), functionCall, BigInteger.ZERO).getTransactionHash();
@@ -190,15 +190,13 @@ public class EthereumServiceImpl implements EthereumService {
         if (this.checkIfCaseExists(monitoredCase.getUuid())) {
             try {
 
-                log.info("updating case with uuid {} name {} isStudent {} State {}", monitoredCase.getUuid(),
-                        monitoredCase.getName(), monitoredCase.getIsStudent(), monitoredCase.getState().getValue());
+                log.info("updating case with uuid {} name {} isStudent {} State {}", monitoredCase.getUuid(), monitoredCase.getState().getValue());
                 LocalDateTime time = LocalDateTime.now();
                 ZonedDateTime zdt = time.atZone(ZoneId.of("America/Los_Angeles"));
                 long millis = zdt.toInstant().toEpochMilli();
                 byte[] uuid = ByteConverters.stringToBytes16(monitoredCase.getUuid()).getValue();
-                String functionCall = this.getContract()
-                        .updateCase(uuid, monitoredCase.getName(), monitoredCase.getIsStudent(),
-                                BigInteger.valueOf(millis), BigInteger.valueOf(monitoredCase.getState().getValue()))
+                String functionCall = this.getContract().updateCase(uuid, BigInteger.valueOf(millis), BigInteger.valueOf(monitoredCase.getState().getValue()),)
+                        .updateCase()
                         .encodeFunctionCall();
                 this.txManager.sendTransaction(DefaultGasProvider.GAS_PRICE, BigInteger.valueOf(1000000),
                         contract.getContractAddress(), functionCall, BigInteger.ZERO).getTransactionHash();

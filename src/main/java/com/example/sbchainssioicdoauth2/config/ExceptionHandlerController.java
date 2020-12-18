@@ -31,6 +31,7 @@ public class ExceptionHandlerController implements ErrorController{
     private static final String ERROR_RESOURCE = "Resource or Claims Not Found";
     private static final String ERROR_PAGE = "errorPage";
 
+
     @ExceptionHandler(Exception.class)
     public ModelAndView doExceptionHandling(Exception exception, HttpServletRequest request, HttpServletResponse response) {
         String errorTitle = ERROR_TITLE_DEFAULT;

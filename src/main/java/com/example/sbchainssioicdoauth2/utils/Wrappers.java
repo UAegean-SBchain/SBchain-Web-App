@@ -18,8 +18,6 @@ public class Wrappers {
 
         Case c = new Case();
         c.setUuid(ssiApp.getUuid());
-        c.setIsStudent(Boolean.FALSE);
-        c.setName(ssiApp.getTaxisAfm());
 
         return c;
     }
