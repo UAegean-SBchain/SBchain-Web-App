@@ -5,11 +5,14 @@
  */
 package com.example.sbchainssioicdoauth2.service;
 
+import java.util.List;
+import java.util.Optional;
+
 import com.example.sbchainssioicdoauth2.contracts.CaseMonitor;
 import com.example.sbchainssioicdoauth2.contracts.VcRevocationRegistry;
 import com.example.sbchainssioicdoauth2.model.pojo.Case;
-import java.util.List;
-import java.util.Optional;
+import com.example.sbchainssioicdoauth2.model.pojo.CasePayment;
+
 import org.web3j.crypto.Credentials;
 
 /**
@@ -28,7 +31,11 @@ public interface EthereumService {
 
     public void addCase(Case monitoredCase);
 
+    public void deleteCaseByUuid(String uuid);
+
     public void updateCase(Case monitoredCase);
+
+    public void addPayment(Case monitoredCase, CasePayment payment);
 
     public boolean checkIfCaseExists(String uuid);
 
@@ -36,6 +43,5 @@ public interface EthereumService {
 
     public boolean checkRevocationStatus(String uuid);
 
-    public void deleteCaseByUuid(String uuid);
     //public void revokeCredentials(String uuid);
 }
