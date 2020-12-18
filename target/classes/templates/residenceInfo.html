@@ -1,0 +1,159 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{residence.info.title}">Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="../static/css/main.css" th:href="@{/css/main.css}"/>
+</head>
+<body>
+<div th:replace="fragments/header"></div>
+<div class="container">
+    <!-- <form method="post" action="#" th:action="@{/residenceInfo/save}" th:object="${ssiInformation}" id="infoForm"> -->
+    <div th:replace="fragments/navigation"></div>
+
+    <div class="formTitleContainer">
+        <h4 th:text="#{residence.info.title}" class="formTitle">Disqualifying Criteria</h4>
+        <div class="infoButton" th:text="i" id="resInfoButton">i</div>
+    </div>
+    <hr class="divider--light">
+    <div class="infoTextBox" id="residenceInfoTextBox" style="display:none;">
+        <div class="inftoTextContainer" th:text="#{residence.info.info.text}">
+
+        </div>
+    </div>
+    <div class="row__container">
+        <div class="row triplecol__row">
+            <div class="inputContainer inputContainer--big">
+                <label th:text="#{street}" class="label input__label"> Street </label>
+                <input type="text" class="input residence__input input--big"
+                       th:value="${ssiInfo != null}? ${ssiInfo[street]}" readonly/>
+            </div>
+            <div class="inputContainer inputContainer--small">
+                <label th:text="#{number}" class="label input__label"> Number </label>
+                <input type="text" class="input residence__input input--small"
+                       th:value="${ssiInfo != null}? ${ssiInfo[streetNumber]}" readonly/>
+            </div>
+            <div class="inputContainer inputContainer--mid">
+                <label th:text="#{po.number}" class="label input__label"> PO Number </label>
+                <div class="inputContainerInfo">
+                    <input type="text" class="input residence__input input--mid"
+                           th:value="${ssiInfo != null}? ${ssiInfo[po]}" readonly/>
+                    <div class="infoButton__wrapper">
+                        <div class="infoButton input__info" th:text="i" id="resInfoButton">i</div>
+                    </div>
+                </div>
+                <div class="infoTextBox" id="residenceInfoTextBox" style="display:none;">
+                    <div class="inftoTextContainer" th:text="#{residence.info.info.text}">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row doublecol__row">
+            <div class="inputContainer inputContainer--big">
+                <label th:text="#{residence.municipality}" class="label input__label"> Municipality </label>
+                <div class="inputContainerInfo">
+                    <input type="text" class="input residence__input input--select"
+                           th:value="${ssiInfo != null}? ${ssiInfo[municipality]}" readonly>
+
+                    <div class="infoButton__wrapper">
+                        <div class="infoButton input__info" th:text="i" id="resInfoButton">i</div>
+                    </div>
+                </div>
+                <div class="infoTextBox" id="residenceInfoTextBox" style="display:none;">
+                    <div class="inftoTextContainer" th:text="#{residence.info.info.text}">
+                    </div>
+                </div>
+            </div>
+            <div class="inputContainer inputContainer--big">
+                <label th:text="#{residence.prefecture}" class="label input__label"> Prefecture </label>
+                <input type="text" class="input residence__input input--select"
+                       th:value="${ssiInfo != null}? ${ssiInfo[prefecture]}" readonly>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row button__row">
+        <!--            <div class="fetchButton">
+                        <a th:href="@{'/multi/residenceInfo/results?uuid='+${uuid}}" th:text="#{fetch.info}" class="fetchLink">Fetch Info</a>
+                    </div>-->
+        <!--            <div class="submitButton">
+                        <a th:href="@{'/multi/residenceInfo/continue?uuid='+${uuid}}" th:text="#{next}" class="nextLink">Fetch Info</a>
+                    </div>-->
+
+        <div class="submitButton">
+            <a th:href="@{'/multi/residenceInfo/continue?uuid='+${uuid}}" th:text="#{next}" class="nextLink">Next</a>
+        </div>
+    </div>
+    <!-- </form> -->
+</div>
+<div th:replace="fragments/footer"></div>
+<script type="text/javascript" src="../static/js/infoText.js" th:src="@{/js/infoText.js}"></script>
+<script type="text/javascript" src="../static/js/navigation.js" th:src="@{/js/navigation.js}"></script>
+<script type="text/javascript">
+
+        const ownerBoxes = document.getElementsByClassName("ownership__checkBox");
+        const ownershipBoxContainers = document.getElementsByClassName("ownership__checkboxContainer");
+        const onwnershipMain = document.getElementById("ownershipMain");
+
+        for(let i=0; i< ownerBoxes.length; i++){
+            ownerBoxes[i].addEventListener('click', function(){
+                if(this.checked == true){
+                    ownershipBoxContainers[i].style.backgroundColor = "lightgrey";
+                    onwnershipMain.value = ownerBoxes[i].id;
+                    for(let j=0; j< ownerBoxes.length; j++){
+                        if(j != i){
+                            ownerBoxes[j].checked = false;
+                            ownershipBoxContainers[j].style.backgroundColor = "rgb(226, 226, 226)";
+                        }
+                    }
+                    
+                } else {
+                    ownershipBoxContainers[i].style.backgroundColor = "rgb(226, 226, 226)";
+                    onwnershipMain.value = '';
+                }
+            });
+        }
+
+        for(let i=0; i< ownerBoxes.length; i++){
+            if(ownerBoxes[i].id == onwnershipMain.value){
+                ownerBoxes[i].checked = true;
+                ownershipBoxContainers[i].style.backgroundColor = "lightgrey";
+            }
+        }
+
+        const powerBoxes = document.getElementsByClassName("power__checkBox");
+        const powerBoxContainers = document.getElementsByClassName("power__checkboxContainer");
+        const powerMain = document.getElementById("powerMain");
+
+        for(let i=0; i< powerBoxes.length; i++){
+            powerBoxes[i].addEventListener('click', function(){
+                if(this.checked == true){
+                    powerBoxContainers[i].style.backgroundColor = "lightgrey";
+                    powerMain.value = powerBoxes[i].id;
+                    for(let j=0; j< powerBoxes.length; j++){
+                        if(j != i){
+                            powerBoxes[j].checked = false;
+                            powerBoxContainers[j].style.backgroundColor = "rgb(226, 226, 226)";
+                        }
+                    }
+                    
+                } else {
+                    powerBoxContainers[i].style.backgroundColor = "rgb(226, 226, 226)";
+                    powerMain.value = '';
+                }
+            });
+        }
+
+        for(let i=0; i< powerBoxes.length; i++){
+            if(powerBoxes[i].id == powerMain.value){
+                powerBoxes[i].checked = true;
+                powerBoxContainers[i].style.backgroundColor = "lightgrey";
+            }
+        }
+
+</script>
+</body>
+</html>

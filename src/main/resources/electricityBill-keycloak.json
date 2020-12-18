@@ -1,0 +1,10 @@
+{
+  "realm": "SSI-EBILL",
+  "auth-server-url": "https://dss1.aegean.gr/auth",
+  "ssl-required": "external",
+  "resource": "sbchain-ebill",
+  "credentials": {
+    "secret": "99fbb021-0e7d-4807-810c-8110c371952d"
+  },
+  "confidential-port": 0
+}

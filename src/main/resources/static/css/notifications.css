@@ -1,0 +1,29 @@
+.notificationTable .notificationHeader--number{
+    text-align: right;
+    width:10%;
+}
+
+.notificationHeader--remark{
+    width:60%;
+}
+
+.notificationHeader--weight{
+    width:10%;
+}
+
+.notificationHeader--control{
+    width:20%;
+}
+
+.documentsTable .documentsHeader--number{
+    text-align: right;
+    width:10%;
+}
+
+.documentsHeader--amka{
+    width:20%;
+}
+
+.documentsHeader--type{
+    width:70%;
+}

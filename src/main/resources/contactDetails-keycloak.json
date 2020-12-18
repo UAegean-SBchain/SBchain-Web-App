@@ -1,0 +1,10 @@
+{
+  "realm": "SSI-CONTACT",
+  "auth-server-url": "https://dss1.aegean.gr/auth",
+  "ssl-required": "external",
+  "resource": "sbchain-contact",
+  "credentials": {
+    "secret": "b008eb7e-7d6b-471d-8f8b-38b6b98070c8"
+  },
+  "confidential-port": 0
+}

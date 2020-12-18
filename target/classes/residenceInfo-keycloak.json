@@ -1,0 +1,10 @@
+{
+  "realm": "SSI-FINANCIAL",
+  "auth-server-url": "https://dss1.aegean.gr/auth",
+  "ssl-required": "external",
+  "resource": "sbchain-financial",
+  "credentials": {
+    "secret": "e08b8b7c-269b-4896-81cb-e7c13aad4f7a"
+  },
+  "confidential-port": 0
+}

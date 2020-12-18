@@ -1,0 +1,9 @@
+{
+    "realm": "asset_info",
+    "resource" : "asset-info-client",
+    "auth-server-url": "http://localhost:9090/auth/",
+    "credentials" : {
+        "secret" : "b347a3cd-c953-4c3f-90f2-2fdd0abe1102"
+     },
+    "principal-attribute" : "prefered_username"
+}

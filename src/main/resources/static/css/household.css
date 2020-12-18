@@ -1,0 +1,16 @@
+.householdTable .householdHeader--number{
+    text-align: right;
+    width:10%;
+}
+
+.householdHeader--member{
+    width:40%;
+}
+
+.householdHeader--relation{
+    width:40%;
+}
+
+.householdHeader--empty{
+    width:10%;
+}

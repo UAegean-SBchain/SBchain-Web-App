@@ -1,0 +1,10 @@
+{
+  "realm": "SSI-SELF",
+  "auth-server-url": "https://dss1.aegean.gr/auth",
+  "ssl-required": "external",
+  "resource": "sbchain-self",
+  "credentials": {
+    "secret": "8163c64a-834d-4b8c-88be-976055720116"
+  },
+  "confidential-port": 0
+}

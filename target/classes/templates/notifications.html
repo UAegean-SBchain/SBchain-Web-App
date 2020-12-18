@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{residence.info.title}">Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../static/css/main.css" th:href="@{/css/main.css}"/>
+    <link rel="stylesheet" href="../static/css/notifications.css" th:href="@{/css/notifications.css}"/>
+</head>
+<body>
+    <div th:replace="fragments/header"></div>
+        <div class="container">
+            <div class="formTitleContainer">
+                <h2 th:text="#{notification.info.title}" class="formTitle">Disqualifying Criteria</h2>
+                <div class="infoButton" th:text="i" id="infoButton">i</div>
+            </div>
+            <hr class="divider--light">
+            <div class="infoTextBox" id="infoTextBox" style="display:none;">
+                <h2 th:text="#{notification.info.infobox.title}" class="infoTextBoxTitle"></h2>
+                <div class="inftoTextListContainer">
+                    <ul>
+                        <li th:text="#{notifications.list.1}"></li>
+                        <li th:text="#{notifications.list.2}"></li>
+                        <li th:text="#{notifications.list.3}"></li>
+                    </ul>
+                </div>
+            </div>
+            <table class="table notificationTable">
+                <thead>
+                    <tr>
+                        <th class="tableHeader notificationdHeader notificationHeader--number" th:text="'#'"></th>
+                        <th class="tableHeader notificationdHeader notificationHeader--remark" th:text="#{notification.remark}"></th>
+                        <th class="tableHeader notificationdHeader notificationHeader--weight" th:text="#{notification.weight}"></th>
+                        <th class="tableHeader notificationdHeader notificationHeader--control" th:text="#{notification.control}"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="item, iter : ${notifications}">
+                        <td class="column column__1" th:text="${iter.count}"></td>
+                        <td class="column column__2" th:text="${item.remark}"></td>
+                        <td class="column column__3" th:text="${item.weight}"></td>
+                        <td class="column column__4" th:text="${item.control}"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="formTitleContainer">
+                <h2 th:text="#{documents.info.title}" class="formTitle">Documents</h2>
+            </div>
+            <hr class="divider--light">
+           
+            <table class="table documentsTable">
+                <thead>
+                    <tr>
+                        <th class="tableHeader documentsHeader documentsHeader--number" th:text="'#'"></th>
+                        <th class="tableHeader documentsHeader documentsHeader--ssn" th:text="#{ssn}"></th>
+                        <th class="tableHeader documentsHeader documentsHeader--type" th:text="#{document.type}"></th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="item, iter : ${documents}">
+                        <td class="column column__1" th:text="${iter.count}"></td>
+                        <td class="column column__2" th:text="${item.ssn}"></td>
+                        <td class="column column__3" th:text="${item.type}"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+            <div class="row button__row">
+                <div class="fetchButton">
+                    <a th:href="@{'/multi/notifications/results?uuid='+${uuid}}" th:text="#{fetch.info}" class="fetchLink">Fetch Info</a>
+                </div>
+                <div class="submitButton">
+                    <a th:href="@{'/multi/notifications/save?uuid='+${uuid}}" th:text="#{next}" class="nextLink">Fetch Info</a>
+                </div>
+            </div>
+        </div>
+        <div th:replace="fragments/footer"></div>
+        <script type="text/javascript" src="../static/js/infoText.js" th:src="@{/js/infoText.js}"></script>
+        <script type="text/javascript" src="../static/js/navigation.js" th:src="@{/js/navigation.js}"></script>
+    </body>
+    </html>

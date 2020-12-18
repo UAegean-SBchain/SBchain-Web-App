@@ -1,0 +1,155 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{residence.info.title}">Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="../static/css/main.css" th:href="@{/css/main.css}"/>
+</head>
+<body>
+<div th:replace="fragments/header"></div>
+<div class="container">
+    <!-- <form method="post" action="#" th:action="@{/contactDetails/save}" th:object="${contactInfo}" id="infoForm"> -->
+    <div th:replace="fragments/navigation"></div>
+
+    <div class="formTitleContainer">
+        <h4 th:text="#{contact.details.title}" class="formTitle">Contact Details</h4>
+    </div>
+    <hr class="divider--light">
+    <div class="row__container">
+        <div class="row doublecol__row">
+            <div class="inputContainer inputContainer--big">
+                <label th:text="#{email}" class="label input__label"> email </label>
+                <div class="inputContainerInfo">
+                    <input type="text" class="input contactDetailsInfo__input input--big"
+                           th:value="${ssiInfo != null}? ${ssiInfo[email]}" readonly/>
+                    <div class="infoButton__wrapper">
+                        <div class="infoButton input__info" th:text="i">i</div>
+                    </div>
+                </div>
+                <div class="infoTextBox" style="display:none;">
+                    <div class="inftoTextContainer" th:text="#{email.phone.info.text}">
+                    </div>
+                </div>
+            </div>
+            <div class="inputContainer inputContainer--big">
+                <label th:text="#{iban}" class="label input__label"> IBAN </label>
+                <div class="inputContainerInfo">
+                    <input type="text" class="input contactDetailsInfo__input input--big"
+                           th:value="${ssiInfo != null}? ${ssiInfo[iban]}" readonly/>
+                    <div class="infoButton__wrapper">
+                        <div class="infoButton input__info" th:text="i">i</div>
+                    </div>
+                </div>
+                <div class="infoTextBox" style="display:none;">
+                    <div class="inftoTextContainer" th:text="#{iban.info.text}">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row doublecol__row">
+            <div class="inputContainer inputContainer--big">
+                <label th:text="#{landline}" class="label input__label"> Landline phone number </label>
+                <input type="text" class="input contactDetailsInfo__input input--big"
+                       th:value="${ssiInfo != null}? ${ssiInfo[landline]}" readonly/>
+            </div>
+            <div class="inputContainer inputContainer--big">
+                <label th:text="#{mobile.phone}" class="label input__label"> Nationality </label>
+                <div class="inputContainerInfo">
+                    <input type="text" class="input contactDetailsInfo__input input--big"
+                           th:value="${ssiInfo != null}? ${ssiInfo[mobilePhone]}" readonly/>
+                    <div class="infoButton__wrapper">
+                        <div class="infoButton input__info" th:text="i">i</div>
+                    </div>
+                </div>
+                <div class="infoTextBox" style="display:none;">
+                    <div class="inftoTextContainer" th:text="#{email.phone.info.text}">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row button__row">
+            <div class="submitButton">
+                <a th:href="@{'/multi/contactDetails/update?uuid='+${uuid}}" th:text="#{update}"
+                   class="nextLink">update</a>
+            </div>
+        </div>
+
+    </div>
+    <div class="formTitleContainer">
+        <h4 th:text="#{mail.address.info.title}" class="formTitle">power Supply</h4>
+    </div>
+    <hr class="divider--light">
+
+    <div class="row__container">
+        <div class="row triplecol__row">
+            <div class="inputContainer inputContainer--big">
+                <label th:text="#{street}" class="label input__label"> Landline phone number </label>
+                <input type="text" class="input contactDetailsInfo__input input--big"
+                       th:value="${ssiInfo != null}? ${ssiInfo[street]}" readonly/>
+            </div>
+            <div class="inputContainer inputContainer--small">
+                <label th:text="#{number}" class="label input__label"> Landline phone number </label>
+                <input type="text" class="input contactDetailsInfo__input input--big"
+                       th:value="${ssiInfo != null}? ${ssiInfo[streetNumber]}" readonly/>
+            </div>
+            <div class="inputContainer inputContainer--mid">
+                <label th:text="#{po.number}" class="label input__label"> PO Number </label>
+                <div class="inputContainerInfo">
+                    <input type="text" class="input contactDetails__input input--mid"
+                           th:value="${ssiInfo != null}? ${ssiInfo[po]}" readonly/>
+                    <div class="infoButton__wrapper">
+                        <div class="infoButton input__info" th:text="i">i</div>
+                    </div>
+                </div>
+                <div class="infoTextBox" id="residenceInfoTextBox" style="display:none;">
+                    <div class="inftoTextContainer" th:text="#{po.number.info.text}">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row triplecol__row row--halfcol">
+            <div class="inputContainer inputContainer--halfcol">
+                <label th:text="#{residence.municipality}" class="label input__label"> Municipality </label>
+                <div class="inputContainerInfo">
+                    <input type="text" class="input residence__input input--select"
+                           th:value="${ssiInfo != null}? ${ssiInfo[municipality]}" readonly>
+
+                    <div class="infoButton__wrapper">
+                        <div class="infoButton input__info" th:text="i">i</div>
+                    </div>
+                </div>
+                <div class="infoTextBox" id="residenceInfoTextBox" style="display:none;">
+                    <div class="inftoTextContainer" th:text="#{municipality.info.text}">
+                    </div>
+                </div>
+            </div>
+            <div class="inputContainer inputContainer--halfcol">
+                <label th:text="#{residence.prefecture}" class="label input__label"> Prefecture </label>
+                <input type="text" class="input residence__input input--select"
+                       th:value="${ssiInfo != null}? ${ssiInfo[prefecture]}" readonly>
+
+            </div>
+        </div>
+    </div>
+    <div class="row button__row">
+        <!--            <div class="fetchButton">
+                        <a th:href="@{'/multi/contactDetails/results?uuid='+${uuid}}" th:text="#{fetch.info}" class="fetchLink">Fetch Info</a>
+                    </div>-->
+        <!--            <div class="submitButton">
+                        <a th:href="@{'/multi/contactDetails/save?uuid='+${uuid}}" th:text="#{next}" class="nextLink">Fetch Info</a>
+                    </div>-->
+
+
+        <div class="submitButton">
+            <a th:href="@{'/multi/contactDetails/continue?uuid='+${uuid}}" th:text="#{next}" class="nextLink">Next</a>
+        </div>
+
+    </div>
+    <!-- </form> -->
+</div>
+<div th:replace="fragments/footer"></div>
+<script type="text/javascript" src="../static/js/infoText.js" th:src="@{/js/infoText.js}"></script>
+<script type="text/javascript" src="../static/js/navigation.js" th:src="@{/js/navigation.js}"></script>
+</body>
+</html>

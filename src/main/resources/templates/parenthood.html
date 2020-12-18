@@ -1,0 +1,140 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{residence.info.title}">Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../static/css/main.css" th:href="@{/css/main.css}"/>
+    
+</head>
+<body>
+    <div th:replace="fragments/header"></div>
+    <div class="container">
+        <!-- <form method="post" action="#" th:action="@{/parenthood/save}" th:object="${parenthoodInfo}" id="infoForm"> -->
+       <div th:replace="fragments/navigation"></div>
+        
+        <div class="formTitleContainer">
+                <h2 th:text="#{parenthood.title}" class="formTitle">Disqualifying Criteria</h2>
+            </div>
+            <hr class="divider--light">
+            <div class="row__container"> 
+                <div class="row triplecol__row row--smallcol">
+                    <input type="text" th:value="${ssiInfo != null }? 
+                           ${ssiInfo[parenthood]}" class="mainBox" hidden="true" readonly>
+                    <div class="checkboxContainer checkboxContainer--false">
+                        <input type="checkbox" id="falseBox" class="checkBox disqCrit__checkBox falseBox" th:value="${false}" th:checked="${singleParent}" disabled >
+                        <label th:text="#{no}" class="label checkBox__label label--right"> No </label>
+                    </div>  
+                    <div class="checkboxContainer checkboxContainer--true">
+                        <input type="checkbox" id="trueBox" class="checkBox disqCrit__checkBox trueBox" th:checked="${!singleParent}" disabled>
+                        <label th:text="#{yes}" class="label checkBox__label label--right"> Yes </label>
+                    </div>
+                    <div th:text="#{parenthood.description}" class="text parenthood__text text--right"> Fead  </div>
+                </div>
+            
+            
+             <label th:text="#{gender}" class="label checkBox__label label--right"> Gender </label>
+                    <div class="inputContainerCheckbox inputContainerInfo">
+                        <input type="text" id="genderMain" th:value="${ssiInfo != null}? ${ssiInfo[gender]}" readonly hidden="true">
+                        <div class="checkboxContainer gender__checkboxContainer " id="maleBoxContainer">
+                            <input type="checkbox" id="male" class="checkBox gender__checkBox maleBox" th:checked="${isMale}" disabled>
+                            <label th:text="#{male}" class="label checkBox__label label--right"> Male </label>
+                        </div>  
+                        <div class="checkboxContainer gender__checkboxContainer" id="femaleBoxContainer">
+                            <input type="checkbox" id="female" class="checkBox gender__checkBox female" th:checked="${isFemale}" disabled>
+                            <label th:text="#{female}" class="label checkBox__label label--right"> Female </label>
+                        </div>
+                        <div class="infoButton__wrapper">
+                            <div class="infoButton input__info" th:text="i" >i</div>
+                        </div>
+                    </div>
+            
+            
+            </div>
+            <div class="row__container"> 
+                <div class="row doublecol__row">
+                    <div class="inputContainer inputContainer--big">
+                        <label th:text="#{custody}" class="label input__label"> custody </label>
+                        <input type="text" class="input personalInfo__input input--big" th:value="${ssiInfo != null}? ${ssiInfo[custody]}" readonly/>
+                    </div>
+                    <div class="inputContainer inputContainer--big">
+                        <label th:text="#{additional.adults}" class="label input__label"> Additional Adults </label>
+                        <input type="text" class="input personalInfo__input input--big" th:value="${ssiInfo != null}? ${ssiInfo[additionalAdults]}" readonly/>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row button__row">
+                 <div class="inputContainer inputContainer--big">
+                    <label th:text="#{ssn}" class="label input__label"> AMKA </label>
+                    <input type="text" class="input personalInfo__input input--big" th:value="${ssiInfo != null}? ${ssiInfo[amka]} : ''" />
+                </div>
+            </div>
+            
+            
+             <div class="row doublecol__row">
+                <div class="inputContainer inputContainer--big">
+                    <label th:text="#{last.name.latin}" class="label input__label"> Last Name (Latin)</label>
+                    <input type="text" class="input personalInfo__input input--big" th:value="${ssiInfo != null}? ${ssiInfo[surnameLatin]} : ''" readonly/>
+                </div>
+                <div class="inputContainer inputContainer--big">
+                    <label th:text="#{first.name.latin}" class="label input__label"> First Name (Latin) </label>
+                    <input type="text" class="input personalInfo__input input--big" th:value="${ssiInfo != null}? ${ssiInfo[nameLatin]} : ''" readonly/>
+                </div>
+            </div>
+            
+            
+             <div class="row doublecol__row">
+                <div class="inputContainer inputContainer--big">
+                    <label th:text="#{father.name.latin}" class="label input__label"> Name of Father(Latin) </label>
+                    <input type="text" class="input personalInfo__input input--big" th:value="${ssiInfo != null}? ${ssiInfo[fatherLatin]} : ''" readonly/>
+                </div>
+                <div class="inputContainer inputContainer--big">
+                    <label th:text="#{mother.name.latin}" class="label input__label"> Name of Mother(Latin) </label>
+                    <input type="text" class="input personalInfo__input input--big" th:value="${ssiInfo != null}? ${ssiInfo[motherLatin]} : ''" readonly/>
+                </div>
+            </div>
+            
+            
+                        <div class="row doublecol__row">
+                <div class="inputContainer inputContainer--big">
+                    <label th:text="#{nationality}" class="label input__label"> Nationality </label>
+                    <div class="inputContainerInfo">
+                        <input type="text" class="input demographicInfo__input input--big" th:value="${ssiInfo != null}? ${ssiInfo[nationality]}" readonly/>
+                        <div class="infoButton__wrapper">
+                            <div class="infoButton input__info" th:text="i" >i</div>
+                        </div>
+                    </div>
+                    <div class="infoTextBox" style="display:none;">
+                        <div class="inftoTextContainer" th:text="#{personal.info.info.text}">
+                        </div>
+                    </div>
+                </div>
+                <div class="inputContainer inputContainer--big">
+                    <label th:text="#{marital.status}" class="label input__label"> Marital Status </label>
+                    <input type="text" class="input personalInfo__input input--big"  th:value="${ssiInfo != null}? ${ssiInfo[maritalStatus]}" readonly>
+                </div>
+            </div>
+            
+            <div class="row button__row">
+<!--                <div class="fetchButton">
+                    <a th:href="@{'/multi/parenthood/results?uuid='+${uuid}}" th:text="#{fetch.info}" class="fetchLink">Fetch Info</a>
+                </div>-->
+<!--                <div class="submitButton">
+                    <a th:href="@{'/multi/parenthood/save?uuid='+${uuid}}" th:text="#{next}" class="nextLink">Fetch Info</a>
+                </div>-->
+           
+
+            <div class="submitButton" >
+                <a th:href="@{'/multi/parenthood/continue?uuid='+${uuid}}" th:text="#{next}" class="nextLink">Next</a>
+            </div> 
+            </div>
+        <!-- </form> -->
+    </div>
+    <div th:replace="fragments/footer"></div>
+    <script type="text/javascript" src="../static/js/main.js" th:src="@{/js/main.js}"></script>
+    <script type="text/javascript" src="../static/js/infoText.js" th:src="@{/js/infoText.js}"></script>
+    <script type="text/javascript" src="../static/js/navigation.js" th:src="@{/js/navigation.js}"></script>
+    
+
+</body>
+</html>

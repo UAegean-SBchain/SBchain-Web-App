@@ -1,0 +1,496 @@
+body{
+    margin: 0;
+    color:rgba(0, 0, 0, 0.726);
+    font-family: 'Times New Roman', Times, serif;
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+    
+}
+
+#header{
+    /*background-color: #0275d8;*/
+    height: 10rem;
+    width: 100%;
+    font-size: 2rem;
+    display: flex;
+    justify-content: center;
+    position:relative;
+    /*margin-bottom: 2rem;*/
+}
+
+#headerFooter{
+    background-color: #0275d8;
+    height: 10rem;
+    width: 100%;
+    font-size: 2rem;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+
+#headerTitle{
+    color:white;
+    margin: auto;
+}
+
+
+#footer{
+    background-color: #0275d8;
+    height: 3.6rem;
+    width: 100%;
+    font-size: 1.3rem;
+    display: flex;
+    justify-content: flex-end;
+    bottom: 0;
+    color:white;
+}
+
+#logoutButton{
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem;
+    margin-right: 22rem;
+    margin-top: 0.5rem;
+}
+
+#logoutButtonError{
+    color: white;
+    text-decoration: none;
+    padding: 0 auto;
+    margin: auto 0;
+}
+
+.label{
+    white-space: nowrap;
+}
+
+.formTitleContainer{
+    height: 2.5rem;
+    display: flex;
+}
+
+.formTitle{
+    margin: auto 0;
+    font-size: 1.5rem;
+    color:rgba(0, 0, 0, 0.726);
+}
+
+.infoButton{
+    width: 1.5rem;
+    height: 1.4rem;
+    border-radius: 50%;
+    border: none;
+    text-decoration: none;
+    background-color: #5bc0de; 
+    text-align: center;
+    font-weight: bold;
+    color: white;
+    padding-right: 0.05rem;
+    padding-top: 0.05rem;
+    margin: auto 0.5rem;
+}
+
+.inputContainerInfo{
+    display: flex;
+}
+
+.infoButton__wrapper{
+    width: 1.5rem;
+    height: 2.3rem;
+    padding-right: 0.5rem;
+    margin: auto 0;
+    background-color: lightgray;
+}
+
+.input__info{
+    width: 1.1rem;
+    height: 1.1rem;
+    border-radius: 50%;
+    border: none;
+    text-decoration: none;
+    background-color: #383838; 
+    text-align: center;
+    font-weight: bold;
+    color: white;
+    padding-right: 0.05rem;
+    padding-top: 0.05rem;
+    margin: 0.45rem 0.45rem;
+}
+
+.inputContainerInfo .input{
+   width:100%;
+}
+
+.infoButton:hover{
+    cursor: pointer;
+}
+
+.infoTextBox{
+    background-color: #00a8db;
+    margin-bottom: 0.5rem;
+    padding: 0.9rem;
+    color: white;
+}
+
+.inftoTextContainer{
+    padding: 0.9rem;
+    color: white;
+}
+
+.container{
+    width: 70%;
+    margin: 0 auto;
+    align-self: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    max-width: 75%;
+    height: 100%;
+    min-height: 70vh;
+}
+
+.errorMsgContainer{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin-bottom: 1rem;
+}
+
+.errorTitle{
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.text--right{
+    margin-left: 1rem;
+}
+
+.divider--light {
+    border: 0;
+    height: 1px;
+    background-color: lightgray;
+}
+
+input[type="text"], .input{
+    height: 2rem;
+    background-color: #e9ecef;
+    border-color: lightgray;
+    border: 0.1rem solid lightgray;
+}
+
+.input--select{
+    height: 2.3rem;
+}
+
+.input--date{
+    height: 2.1rem;
+}
+
+.input:focus,
+.tArea:focus,
+.select:focus {
+  box-shadow: 0 0 0.2rem #065ca7;
+  border: 0.1rem solid #065ca7;
+}
+
+.button__row{
+    margin-top: 1rem;
+    display: flex;
+    width: 25%;
+    align-content: flex-start;
+}
+
+.fetchButton{
+    height: 3.5rem;
+    width: 8rem;
+    background-color: #0275d8; 
+    margin: 0 1rem 0 1rem;
+}
+
+.fetchButton:hover{
+    background-color: #0663b4;
+}
+
+.fetchButton:active{
+    background-color: #065ca7;
+}
+
+.fetchLink, fetchLink:visited, fetchLink:active{
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center; 
+    margin: auto;
+}
+
+.submitFinal, submitFinal:visited, submitFinal:active{
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center; 
+    margin: auto;
+}
+
+
+
+
+.nextLink, nextLink:visited, nextLink:active{
+    color: white;
+    text-decoration: none;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center; 
+    margin: auto;
+}
+
+#errorLogoutButton, errorLogoutButton:visited, errorLogoutButton:active{
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center; 
+    margin: auto;
+}
+
+
+.submitButton{
+    background-color: #5cb85c;
+    width: 8rem;
+    height: 3.5rem;
+    border: none;
+    color: white;
+}
+
+.submitButton-delete{
+    background-color: #993300;
+    width: 8rem;
+    height: 3.5rem;
+    border: none;
+    color: white;
+}
+
+
+
+.backButton{
+    background-color: #215bff;
+    width: 8rem;
+    height: 3.5rem;
+    border: none;
+    color: white;
+    margin-bottom: 2rem;
+}
+
+.tempButton{
+    background-color: #ab4fe4;
+    width: 8rem;
+    height: 3.5rem;
+    border: none;
+    color: white;
+    margin-bottom: 2rem;
+}
+
+
+
+
+
+
+
+
+
+.submitFinalButton{
+    background-color: #a10922;
+    width: 8rem;
+    height: 3.5rem;
+    border: none;
+    color: white;
+}
+
+
+.issueVCButton{
+    background-color: white;
+    width: 8rem;
+    height: 3.5rem;
+    border: none;
+    color: white;
+    margin-left:2rem
+}
+
+.submitButton:focus {
+    outline:none;
+    background-color: #2ebd2e;
+    border: 0.1rem solid #2ebd2e;
+}
+
+.submitButton:hover {
+    background-color: #56ad56;
+}
+
+.row__container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.doublecol__row, .triplecol__row{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    margin-top: 1rem;
+}
+
+.disqualify__row{
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.row--smallcol{
+    display: flex;
+    justify-content: start;
+}
+
+.full__row{
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.inputContainerCheckbox{
+    width: 100%;
+    display:flex;
+    flex-wrap: wrap;
+}
+
+.checkboxContainer{
+    display:flex;
+    padding: 0.5rem;
+    background-color: rgb(226, 226, 226);
+    border: 1px solid lightgray;
+
+    height: 1.20rem;
+}
+
+.inputContainer{
+    display: flex;
+    flex-direction: column;
+}
+
+.inputContainer--full{
+    width: 100%;
+}
+
+.inputContainer--big{
+    width: 48%;
+}
+
+.inputContainer--small{
+    width: 17%;
+}
+
+.inputContainer--mid{
+    width: 27%;
+}
+
+.inputContainer--halfcol{
+    width: 22%;
+}
+
+.input::-webkit-inner-spin-button,
+.input::-webkit-outer-spin-button {
+  padding-top: 1rem;
+  margin: 0;
+}
+
+.input,
+.tArea,
+.select {
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -ms-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.table{
+  border: 1px solid lightgray;
+  border-collapse: collapse;
+  align-content: center;
+  width:100%;
+  margin-top:1rem;
+  margin-bottom: 1rem;
+}
+
+.table .tableHeader{
+    border: 1px solid lightgray;
+    text-align: left;
+    word-wrap: normal;
+}
+.column__1{
+    border: 1px solid lightgray;
+    text-align:right;
+}
+.column__2, .column__3, .column__4{
+    border: 1px solid lightgray;
+    text-align: left;
+}
+@media only screen and (min-width: 900px) {
+    .row--halfcol{
+        width:48%;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .row--halfcol .inputContainer--halfcol{
+        width: 48%;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    .doublecol__row, .triplecol__row{
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        margin-top: 0;
+    }
+
+    .disqualify__row{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+    }
+
+    .infoButton__wrapper{
+        height: 2.35rem;
+    }
+
+    .input--select{
+        height: 2.4rem;
+    }
+    
+    .input--date{
+        height: 2.2rem;
+    }
+
+    .checkboxContainer{
+    
+        height: 1.21rem;
+    }
+    .inputContainer{
+        margin-top:1rem;
+        width: 100%;
+    }
+}

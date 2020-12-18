@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{amounts.title}">Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../static/css/main.css" th:href="@{/css/main.css}"/>
+</head>
+<body>
+    <div th:replace="fragments/header"></div>
+    <div class="container">
+    <!-- <form method="post" action="#" th:action="@{/amounts/save}" th:object="${calculatedAmounts}" id="infoForm"> -->
+        <div th:replace="fragments/navigation"></div>  
+    
+        <h4 th:text="#{amounts.title}" class="formTitle">Personal Info</h4>
+            <hr class="divider--light">
+        <div class="row__container"> 
+            <div class="row doublecol__row" th:text="#{amounts.final_text}">
+<!--                <div class="inputContainer inputContainer--big">
+                    <label th:text="#{monthly.guarantee}" class="label input__label"> guarantee </label>
+                    <input type="text" class="input amounts__input input--big" th:value="${ssiInfo != null}? ${monthlyGuarantee}" readonly/>
+                </div>
+                <div class="inputContainer inputContainer--big">
+                    <label th:text="#{total.income}" class="label input__label"> total income </label>
+                    <input type="text" class="input amounts__input input--big" th:value="${ssiInfo != null}? ${totalIncome}" readonly/>
+                </div>-->
+            </div>
+<!--            <div class="row doublecol__row">
+                <div class="inputContainer inputContainer--big">
+                    <label th:text="#{monthly.income}" class="label input__label"> monthly income </label>
+                    <input type="text" class="input amounts__input input--big" th:value="${ssiInfo != null}? ${monthlyIncome}" readonly/>
+                </div>
+                <div class="inputContainer inputContainer--big">
+                    <label th:text="#{monthly.aid}" class="label input__label"> monthly aid </label>
+                    <input type="text" class="input amounts__input input--big" th:value="${ssiInfo != null}? ${monthlyAid}" readonly/>
+                </div>
+            </div>-->
+
+        </div>
+        <div class="row button__row">
+<!--            <div class="fetchButton">
+                <a th:href="@{'/multi/amounts/results?uuid='+${uuid}}" th:text="#{fetch.info}" class="fetchLink">Fetch Info</a>
+            </div>-->
+            <div   class="submitFinalButton">
+                <a  id="saveButton" th:href="'#'" onclick="saveFinal()" th:text="#{submit}" class="submitFinal">Store to DB</a>
+            </div>
+
+            <div class="issueVCButton">
+                <a  id="issueLink"  th:text="#{issue.vc}" class="submitFinal">Issue VC</a>
+            </div>
+
+
+        </div>
+            
+        <div class="row button__row">
+            <div id="messageContainer" style="display:none">
+                mockmessage
+            </div>
+
+        </div>    
+            
+            
+    <!-- </form> -->
+    </div>
+    <div th:replace="fragments/footer"></div>
+    <script type="text/javascript" src="../static/js/navigation.js" th:src="@{/js/navigation.js}"></script>
+</body>
+</html>
