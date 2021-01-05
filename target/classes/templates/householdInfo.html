@@ -34,9 +34,10 @@
             <tbody th:if="${houseHoldInfo}">
             <tr th:each="member, counter : ${houseHoldInfo}">
                 <td class="column column__1" th:text="${counter.count}"></td>
-                <span th:each="item, iter : ${member}">
-                            <td class="column column__3" th:text="${item.value}"></td>
-                        </span>
+                <!--                <span th:each="item, iter : ${member}">-->
+                <td class="column column__3" th:text="${member.name}"></td>
+                <td class="column column__3" th:text="${member.relationship}"></td>
+                <!--                        </span>-->
             </tr>
 
             </tbody>

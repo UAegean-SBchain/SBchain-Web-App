@@ -1,6 +1,7 @@
 package com.example.sbchainssioicdoauth2.controller;
 
 import com.example.sbchainssioicdoauth2.model.entity.SsiApplication;
+import com.example.sbchainssioicdoauth2.model.pojo.HouseholdMember;
 import com.example.sbchainssioicdoauth2.service.CacheService;
 import com.example.sbchainssioicdoauth2.service.DBService;
 import com.example.sbchainssioicdoauth2.service.PopulateInfoService;
@@ -9,6 +10,7 @@ import com.example.sbchainssioicdoauth2.utils.LogoutUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.beans.IntrospectionException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -45,8 +47,16 @@ public class HouseholdController {
         ssiApp = infoService.updateModelfromCacheMergeDB(ssiApp, model, request, uuid);
         cacheService.putInfo(ssiApp, uuid);
 
-        Map<String, String>[] householdComposition = ssiApp.getHouseholdComposition();
-        model.addAttribute("houseHoldInfo", householdComposition);
+        //java.util.List<com.example.sbchainssioicdoauth2.model.pojo.HouseholdMember> cannot be converted to java.util.Map<java.lang.String,java.lang.String>[]
+        List<HouseholdMember> householdCompositionList = ssiApp.getHouseholdComposition();
+//        Map<String, String>[] householdCompositionMap = new Map[householdCompositionList.size()];
+//        householdCompositionList.stream().forEach( member ->{
+//            member.getName();
+//            member.getRelationship();
+//        });
+
+
+        model.addAttribute("houseHoldInfo", householdCompositionList);
         return new ModelAndView("householdInfo");
     }
 

@@ -4,8 +4,11 @@ import com.example.sbchainssioicdoauth2.model.entity.SsiApplication;
 import com.example.sbchainssioicdoauth2.service.CacheService;
 import com.example.sbchainssioicdoauth2.service.DBService;
 import com.example.sbchainssioicdoauth2.service.PopulateInfoService;
+
 import java.beans.IntrospectionException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Optional;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -48,8 +51,12 @@ public class DBController {
     @PostMapping("/delete")
     protected @ResponseBody
     String delete(@AuthenticationPrincipal OidcUser oidcUser, @RequestParam(value = "uuid", required = true) String uuid) throws IllegalAccessException, IllegalArgumentException, IntrospectionException, InvocationTargetException {
-        SsiApplication ssiApp = cacheService.get(uuid);
-        submitService.delete(ssiApp);
+//        SsiApplication ssiApp = cacheService.get(uuid);
+        Optional<SsiApplication> ssiApp = submitService.getByUuid(uuid);
+        if (ssiApp.isPresent()) {
+            submitService.delete(ssiApp.get());
+
+        }
         return "OK";
     }
 

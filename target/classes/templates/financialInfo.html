@@ -308,99 +308,97 @@
             <tbody th:if="${houseHoldInfo}">
             <tr th:each="member, counter : ${houseHoldInfo}">
                 <td class="column column__1" th:text="${counter.count}"></td>
-                <span th:each="item, iter : ${member}">
-                            <td class="column column__3" th:text="${item.value}"></td>
-                        </span>
+<!--                <span th:each="item, iter : ${member}">-->
+                <td class="column column__3" th:text="${member.name}"></td>
+                <td class="column column__3" th:text="${member.relationship}"></td>
+<!--                        </span>-->
             </tr>
 
             </tbody>
         </table>
     </div>
 
-    <div class="formTitleContainer">
-        <h4 th:text="#{residence.info.title}" class="formTitle">Disqualifying Criteria</h4>
-        <div class="infoButton" th:text="i" id="resInfoButtonC">i</div>
-    </div>
-    <hr class="divider--light">
-    <div class="infoTextBox" id="residenceInfoTextBoxC" style="display:none;">
-        <div class="inftoTextContainer" th:text="#{residence.info.info.text}">
+    <!--    <div class="formTitleContainer">-->
+    <!--        <h4 th:text="#{residence.info.title}" class="formTitle">Disqualifying Criteria</h4>-->
+    <!--        <div class="infoButton" th:text="i" id="resInfoButtonC">i</div>-->
+    <!--    </div>-->
+    <!--    <hr class="divider&#45;&#45;light">-->
+    <!--    <div class="infoTextBox" id="residenceInfoTextBoxC" style="display:none;">-->
+    <!--        <div class="inftoTextContainer" th:text="#{residence.info.info.text}">-->
 
-        </div>
-    </div>
-    <div class="row__container">
-        <div class="row triplecol__row">
-            <div class="inputContainer inputContainer--big">
-                <label th:text="#{street}" class="label input__label"> Street </label>
-                <input type="text" class="input residence__input input--big"
-                       th:value="${ssiInfo != null}? ${ssiInfo[street]}" readonly/>
-            </div>
-            <div class="inputContainer inputContainer--small">
-                <label th:text="#{number}" class="label input__label"> Number </label>
-                <input type="text" class="input residence__input input--small"
-                       th:value="${ssiInfo != null}? ${ssiInfo[streetNumber]}" readonly/>
-            </div>
-            <div class="inputContainer inputContainer--mid">
-                <label th:text="#{po.number}" class="label input__label"> PO Number </label>
-                <div class="inputContainerInfo">
-                    <input type="text" class="input residence__input input--mid"
-                           th:value="${ssiInfo != null}? ${ssiInfo[po]}" readonly/>
-                    <div class="infoButton__wrapper">
-                        <div class="infoButton input__info" th:text="i" id="resInfoButtonR">i</div>
-                    </div>
-                </div>
-                <div class="infoTextBox" id="residenceInfoTextBoxR" style="display:none;">
-                    <div class="inftoTextContainer" th:text="#{residence.info.info.text}">
-                    </div>
-                </div>
-            </div>
+    <!--        </div>-->
+    <!--    </div>-->
+    <!--    <div class="row__container">-->
+    <!--        <div class="row triplecol__row">-->
+    <!--            <div class="inputContainer inputContainer&#45;&#45;big">-->
+    <!--                <label th:text="#{street}" class="label input__label"> Street </label>-->
+    <!--                <input type="text" class="input residence__input input&#45;&#45;big"-->
+    <!--                       th:value="${ssiInfo != null}? ${ssiInfo[street]}" readonly/>-->
+    <!--            </div>-->
+    <!--            <div class="inputContainer inputContainer&#45;&#45;small">-->
+    <!--                <label th:text="#{number}" class="label input__label"> Number </label>-->
+    <!--                <input type="text" class="input residence__input input&#45;&#45;small"-->
+    <!--                       th:value="${ssiInfo != null}? ${ssiInfo[streetNumber]}" readonly/>-->
+    <!--            </div>-->
+    <!--            <div class="inputContainer inputContainer&#45;&#45;mid">-->
+    <!--                <label th:text="#{po.number}" class="label input__label"> PO Number </label>-->
+    <!--                <div class="inputContainerInfo">-->
+    <!--                    <input type="text" class="input residence__input input&#45;&#45;mid"-->
+    <!--                           th:value="${ssiInfo != null}? ${ssiInfo[po]}" readonly/>-->
+    <!--                    <div class="infoButton__wrapper">-->
+    <!--                        <div class="infoButton input__info" th:text="i" id="resInfoButtonR">i</div>-->
+    <!--                    </div>-->
+    <!--                </div>-->
+    <!--                <div class="infoTextBox" id="residenceInfoTextBoxR" style="display:none;">-->
+    <!--                    <div class="inftoTextContainer" th:text="#{residence.info.info.text}">-->
+    <!--                    </div>-->
+    <!--                </div>-->
+    <!--            </div>-->
 
-        </div>
-        <div class="row doublecol__row">
-            <div class="inputContainer inputContainer--big">
-                <label th:text="#{residence.municipality}" class="label input__label"> Municipality </label>
-                <div class="inputContainerInfo">
-                    <input type="text" class="input residence__input input--select"
-                           th:value="${ssiInfo != null}? ${ssiInfo[municipality]}" readonly>
+    <!--        </div>-->
+    <!--        <div class="row doublecol__row">-->
+    <!--            <div class="inputContainer inputContainer&#45;&#45;big">-->
+    <!--                <label th:text="#{residence.municipality}" class="label input__label"> Municipality </label>-->
+    <!--                <div class="inputContainerInfo">-->
+    <!--                    <input type="text" class="input residence__input input&#45;&#45;select"-->
+    <!--                           th:value="${ssiInfo != null}? ${ssiInfo[municipality]}" readonly>-->
 
-                    <div class="infoButton__wrapper">
-                        <div class="infoButton input__info" th:text="i" id="resInfoButton">i</div>
-                    </div>
-                </div>
-                <div class="infoTextBox" id="residenceInfoTextBox" style="display:none;">
-                    <div class="inftoTextContainer" th:text="#{residence.info.info.text}">
-                    </div>
-                </div>
-            </div>
-            <div class="inputContainer inputContainer--big">
-                <label th:text="#{residence.prefecture}" class="label input__label"> Prefecture </label>
-                <input type="text" class="input residence__input input--select"
-                       th:value="${ssiInfo != null}? ${ssiInfo[prefecture]}" readonly>
+    <!--                    <div class="infoButton__wrapper">-->
+    <!--                        <div class="infoButton input__info" th:text="i" id="resInfoButton">i</div>-->
+    <!--                    </div>-->
+    <!--                </div>-->
+    <!--                <div class="infoTextBox" id="residenceInfoTextBox" style="display:none;">-->
+    <!--                    <div class="inftoTextContainer" th:text="#{residence.info.info.text}">-->
+    <!--                    </div>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--            <div class="inputContainer inputContainer&#45;&#45;big">-->
+    <!--                <label th:text="#{residence.prefecture}" class="label input__label"> Prefecture </label>-->
+    <!--                <input type="text" class="input residence__input input&#45;&#45;select"-->
+    <!--                       th:value="${ssiInfo != null}? ${ssiInfo[prefecture]}" readonly>-->
 
-            </div>
-
-        </div>
+    <!--            </div>-->
 
 
-        <div class="row button__row">
-            <div class="submitButton">
-                <a th:href="@{'/multi/financialInfo/update?uuid='+${uuid}}" th:text="#{update}"
-                   class="nextLink">update</a>
-            </div>
-        </div>
-
-    </div>
-
-
-    <hr class="divider--light">
+<!--    <div class="row button__row">-->
+<!--        <div class="submitButton">-->
+<!--            <a th:href="@{'/multi/financialInfo/update?uuid='+${uuid}}" th:text="#{update}"-->
+<!--               class="nextLink">update</a>-->
+<!--        </div>-->
+<!--    </div>-->
 
     <div class="row button__row">
         <div class="submitButton">
             <a th:href="@{'/multi/financialInfo/continue?uuid='+${uuid}}" th:text="#{next}" class="nextLink">Next</a>
         </div>
     </div>
+</div>
 
 
-    <!-- </form> -->
+<hr class="divider--light">
+
+
+<!-- </form> -->
 </div>
 <div th:replace="fragments/footer"></div>
 <script type="text/javascript" src="../static/js/infoText.js" th:src="@{/js/infoText.js}"></script>

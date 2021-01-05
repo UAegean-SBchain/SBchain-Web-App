@@ -3,6 +3,7 @@ package com.example.sbchainssioicdoauth2.service;
 import com.example.sbchainssioicdoauth2.config.MyResourceNotFoundException;
 import com.example.sbchainssioicdoauth2.model.entity.SsiApplication;
 import com.example.sbchainssioicdoauth2.model.entity.SsiApplication.CredsAndExp;
+import com.example.sbchainssioicdoauth2.model.pojo.HouseholdMember;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.beans.BeanInfo;
@@ -13,6 +14,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.security.Principal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 
@@ -105,6 +108,11 @@ public class PopulateInfoService {
 
     public SsiApplication populateSsiApp(SsiApplication ssiApp, HttpServletRequest request, String formType, String uuid) {
 
+        final LocalDateTime nowLocalTime
+                = LocalDateTime.now();
+        String lt = nowLocalTime.format(DateTimeFormatter.ISO_DATE_TIME);
+        lt = lt.replace(".", "");
+
         final Principal principal = request.getUserPrincipal();
         if (principal instanceof KeycloakAuthenticationToken) {
             KeycloakAuthenticationToken kp = (KeycloakAuthenticationToken) principal;
@@ -185,22 +193,30 @@ public class PopulateInfoService {
             ssiApp.setMunicipality(getStringIfNotNull(otherClaims.get("mitro-municipality"), ssiApp.getMunicipality()));
 
 //            if (formType.equals(FormType.FINANCIAL_INFO.value)) {
+
             ssiApp.setSalariesR(getStringIfNotNull(otherClaims.get("salariesR"), ssiApp.getSalariesR()));
+            updateHistoryIfNotNull(ssiApp.getSalariesRHistory(), otherClaims, "salariesR", lt);
             ssiApp.setPensionsR(getStringIfNotNull(otherClaims.get("pensionsR"), ssiApp.getPensionsR()));
-            ssiApp.setFarmingR(getStringIfNotNull(otherClaims.get("farmingR"), ssiApp.getFarmingR()));
+            updateHistoryIfNotNull(ssiApp.getPensionsRHistory(), otherClaims, "pensionsR", lt);
             ssiApp.setFreelanceR(getStringIfNotNull(otherClaims.get("freelanceR"), ssiApp.getFreelanceR()));
+            updateHistoryIfNotNull(ssiApp.getFreelanceRHistory(), otherClaims, "freelanceR", lt);
+            ssiApp.setOtherBenefitsR(getStringIfNotNull(otherClaims.get("otherBenefitsR"), ssiApp.getOtherBenefitsR()));
+            updateHistoryIfNotNull(ssiApp.getOtherBenefitsRHistory(), otherClaims, "otherBenefitsR", lt);
+            ssiApp.setDepositsA(getStringIfNotNull(otherClaims.get("depositsA"), ssiApp.getDepositsA()));
+            updateHistoryIfNotNull(ssiApp.getDepositsAHistory(), otherClaims, "depositsA", lt);
+            ssiApp.setDomesticRealEstateA(getStringIfNotNull(otherClaims.get("domesticRealEstateA"), ssiApp.getDomesticRealEstateA()));
+            updateHistoryIfNotNull(ssiApp.getDomesticRealEstateAHistory(), otherClaims, "domesticRealEstateA", lt);
+            ssiApp.setForeignRealEstateA(getStringIfNotNull(otherClaims.get("foreignRealEstateA"), ssiApp.getForeignRealEstateA()));
+            updateHistoryIfNotNull(ssiApp.getForeignRealEstateAHistory(), otherClaims, "foreignRealEstateA", lt);
+
+            ssiApp.setFarmingR(getStringIfNotNull(otherClaims.get("farmingR"), ssiApp.getFarmingR()));
             ssiApp.setRentIncomeR(getStringIfNotNull(otherClaims.get("rentIncomeR"), ssiApp.getRentIncomeR()));
             ssiApp.setUnemploymentBenefitR(getStringIfNotNull(otherClaims.get("unemploymentBenefitR"), ssiApp.getUnemploymentBenefitR()));
-            ssiApp.setOtherBenefitsR(getStringIfNotNull(otherClaims.get("otherBenefitsR"), ssiApp.getOtherBenefitsR()));
             ssiApp.setEkasR(getStringIfNotNull(otherClaims.get("ekasR"), ssiApp.getEkasR()));
             ssiApp.setOtherIncomeR(getStringIfNotNull(otherClaims.get("otherIncomeR"), ssiApp.getOtherIncomeR()));
             ssiApp.setErgomeR(getStringIfNotNull(otherClaims.get("ergomeR"), ssiApp.getErgomeR()));
-
 //            if (formType.equals(FormType.ASSET_INFO.value)) {
             ssiApp.setDepositInterestA(getStringIfNotNull(otherClaims.get("depositInterestA"), ssiApp.getDepositInterestA()));
-            ssiApp.setDepositsA(getStringIfNotNull(otherClaims.get("depositsA"), ssiApp.getDepositsA()));
-            ssiApp.setDomesticRealEstateA(getStringIfNotNull(otherClaims.get("domesticRealEstateA"), ssiApp.getDomesticRealEstateA()));
-            ssiApp.setForeignRealEstateA(getStringIfNotNull(otherClaims.get("foreignRealEstateA"), ssiApp.getForeignRealEstateA()));
             ssiApp.setVehicleValueA(getStringIfNotNull(otherClaims.get("vehicleValueA"), ssiApp.getVehicleValueA()));
             ssiApp.setInvestmentsA(getStringIfNotNull(otherClaims.get("investmentsA"), ssiApp.getInvestmentsA()));
 
@@ -209,7 +225,16 @@ public class PopulateInfoService {
                 if (otherClaims.get("e1-householdComposition") != null) {
                     ObjectMapper mapper = new ObjectMapper();
                     Map<String, String>[] householdComposition = (Map<String, String>[]) mapper.readValue((String) otherClaims.get("e1-householdComposition"), Map[].class);
-                    ssiApp.setHouseholdComposition(householdComposition);
+                    List<HouseholdMember> members = new ArrayList();
+                    Arrays.stream(householdComposition).forEach(map -> {
+                        HouseholdMember member = new HouseholdMember();
+                        member.setName(map.get("name"));
+                        member.setSurname(map.get("surname"));
+                        member.setRelationship(map.get("relation"));
+                        members.add(member);
+                    });
+                    ssiApp.setHouseholdComposition(members);
+                    ssiApp.getHouseholdCompositionHistory().put(lt,members);
                 }
 
             } catch (Exception e) {
@@ -242,16 +267,16 @@ public class PopulateInfoService {
 
     public List<CredsAndExp> addCredentialIdAndIat(String attributeName, SsiApplication ssiApp, Map<String, Object> otherClaims) {
 
-        boolean exists = ssiApp.getCredentialIds().stream().filter(cid -> {
+        boolean isCredentialIDPresent = ssiApp.getCredentialIds().stream().filter(cid -> {
             return cid.getId().equals((String) otherClaims.get(attributeName));
         }).findFirst().isPresent();
 
-        if (otherClaims.get(attributeName) != null && !exists) {
+        if (otherClaims.get(attributeName) != null && !isCredentialIDPresent) {
             String credentialId = (String) otherClaims.get(attributeName);
             String exp = (String) otherClaims.get("expires");
             String name = (String) otherClaims.get("credential-name");
 
-            CredsAndExp cdi = new SsiApplication.CredsAndExp();
+            CredsAndExp cdi = new CredsAndExp();
             cdi.setId(credentialId);
             cdi.setExp(exp);
             cdi.setName(name);
@@ -333,6 +358,13 @@ public class PopulateInfoService {
         }
         return new Long(0);
 
+    }
+
+
+    public void updateHistoryIfNotNull(Map<String, String> history, Map<String, Object> claims, String attributeName, String timestamp) {
+        if (claims.get(attributeName) != null) {
+            history.put(timestamp, (String) claims.get(attributeName));
+        }
     }
 
 }

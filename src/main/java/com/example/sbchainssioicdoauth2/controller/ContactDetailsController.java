@@ -40,6 +40,9 @@ public class ContactDetailsController {
                                               ModelMap model, HttpServletRequest request) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, IntrospectionException {
         model.addAttribute("uuid", uuid);
         infoService.populateFetchInfo(model, request, uuid);
+
+        //TODO display residence info, mail address
+
         SsiApplication ssiApp = cacheService.get(uuid);
         infoService.populateSsiApp(ssiApp, request, FormType.PERSONAL_DECLARATION.value, uuid);
         ssiApp = infoService.updateModelfromCacheMergeDB(ssiApp, model, request, uuid);

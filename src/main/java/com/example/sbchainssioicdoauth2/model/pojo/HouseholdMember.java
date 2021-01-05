@@ -15,4 +15,5 @@ public class HouseholdMember {
     private String surname;
     private String afm;
     private String dateOfBirth;
+    private String relationship;
 }

@@ -1,29 +1,23 @@
 package com.example.sbchainssioicdoauth2.model.entity;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.validation.constraints.NotBlank;
-
-import com.example.sbchainssioicdoauth2.model.pojo.HouseholdMember;
-
-import org.springframework.data.annotation.Id;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.data.annotation.Id;
+
+import javax.validation.constraints.NotBlank;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @ToString
 @Getter
 @Setter
 @NoArgsConstructor
-public class SsiApplicationNew {
- 
+public class SsiApplicationOld {
+
     @Id
     private String id;
 
@@ -167,18 +161,8 @@ public class SsiApplicationNew {
     @NotBlank
     private String investmentsA;
 
-    private LinkedHashMap<LocalDateTime, String> salariesRHistory;
-    private LinkedHashMap<LocalDateTime, String> pensionsRHistory;
-    private LinkedHashMap<LocalDateTime, String> freelanceRHistory;
-    private LinkedHashMap<LocalDateTime, String> otherBenefitsRHistory;
-    private LinkedHashMap<LocalDateTime, String> depositsAHistory;
-    private LinkedHashMap<LocalDateTime, String> domesticRealEstateAHistory;
-    private LinkedHashMap<LocalDateTime, String> foreignRealEstateAHistory;
-
     //household composition
-    private HouseholdMember householdPrincipal;
-    private List<HouseholdMember> householdComposition;
-    private LinkedHashMap<LocalDateTime,List<HouseholdMember>> householdCompositionHistory;
+    private Map<String, String>[] householdComposition;
 
     //income guarantee
     private String monthlyGuarantee;
