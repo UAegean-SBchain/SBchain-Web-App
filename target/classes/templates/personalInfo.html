@@ -143,7 +143,7 @@
             
 
             <div class="submitButton isDisabled"  >
-                <a id="nextButton" th:href="@{'/multi/personalInfo/continue?uuid='+${uuid}}" th:text="#{next}" class="nextLink">Next</a>
+                <a id="nextButton" style="pointer-events: none;" th:href="@{'/multi/personalInfo/continue?uuid='+${uuid}}" th:text="#{next}" class="nextLink">Next</a>
             </div>
 
 
@@ -181,6 +181,7 @@
                 //update view by enabling next button
                  let nextBtn = document.getElementById("nextButton");
                  nextBtn.classList.remove("isDisabled");
+                 nextBtn.style["pointer-events"] = "auto";
                  let afm = document.getElementById("AFM").value;
                  document.getElementById("nextButton").href = document.getElementById("nextButton").href.split("&principal")[0]+"&principal="+afm;
             }
@@ -190,12 +191,14 @@
                 principalAFMBox.style.display="block";
                 let nextBtn = document.getElementById("nextButton");
                 nextBtn.classList.add("isDisabled");
+                nextBtn.style["pointer-events"] = "none";
             }
              if(principalSelect.value === "0"){
                 let principalAFMBox = document.getElementById("InputPrincipal");
                 principalAFMBox.style.display="none";
                 let nextBtn = document.getElementById("nextButton");
                 nextBtn.classList.add("isDisabled");
+                nextBtn.style["pointer-events"] = "none";
             }
         }
 
@@ -203,6 +206,7 @@
         console.log("principal afm" + e.target.value);
          let nextBtn = document.getElementById("nextButton");
          nextBtn.classList.remove("isDisabled");
+         nextBtn.style["pointer-events"] = "auto";
          document.getElementById("nextButton").href = document.getElementById("nextButton").href.split("&principal")[0]+"&principal="+e.target.value;
      }
 
