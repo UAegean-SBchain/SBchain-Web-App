@@ -1,16 +1,21 @@
 package com.example.sbchainssioicdoauth2.controller;
 
 import com.example.sbchainssioicdoauth2.model.entity.SsiApplication;
+import com.example.sbchainssioicdoauth2.model.pojo.HouseholdMember;
 import com.example.sbchainssioicdoauth2.service.CacheService;
+import com.example.sbchainssioicdoauth2.service.DBService;
 import com.example.sbchainssioicdoauth2.service.PopulateInfoService;
 import com.example.sbchainssioicdoauth2.service.ResourceService;
 import com.example.sbchainssioicdoauth2.utils.FormType;
 import com.example.sbchainssioicdoauth2.utils.LogoutUtils;
 import com.example.sbchainssioicdoauth2.utils.RandomIdGenerator;
+
 import java.beans.IntrospectionException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +43,9 @@ public class PersonalInformationController {
     @Autowired
     PopulateInfoService infoService;
 
-    private final static Logger log = LoggerFactory.getLogger(PersonalInformationController.class);
+    @Autowired
+    DBService dbServ;
+
 
     @GetMapping("/view")
     protected ModelAndView personalInfo(@RequestParam(value = "uuid", required = false) String uuid, ModelMap model, HttpServletRequest request) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, IntrospectionException {
@@ -59,7 +66,7 @@ public class PersonalInformationController {
         return new ModelAndView("personalInfo");
     }
 
-////    @PreAuthorize("hasAuthority('personal_info')")
+    ////    @PreAuthorize("hasAuthority('personal_info')")
 //    @GetMapping("/results")
 //    protected ModelAndView personalInfoResults(@RequestParam(value = "uuid", required = true) String uuid, ModelMap model,
 //            HttpServletRequest request) {
@@ -73,16 +80,26 @@ public class PersonalInformationController {
 //    @PreAuthorize("hasAuthority('personal_info')")
     @GetMapping("/continue")
     protected ModelAndView personalInfoSubmit(RedirectAttributes attr, @RequestParam(value = "uuid", required = true) String uuid,
-            ModelMap model, HttpServletRequest request, HttpSession session) {
+                                              @RequestParam(value = "principal", required = true) String principalAFM,
+                                              ModelMap model, HttpServletRequest request, HttpSession session) {
 
         SsiApplication ssiApp = cacheService.get(uuid);
+        Optional<SsiApplication> principalApplications = dbServ.getByTaxisAfm(principalAFM);
+        HouseholdMember principalApplicant = new HouseholdMember();
+        principalApplicant.setAfm(principalAFM);
+        ssiApp.setHouseholdPrincipal(principalApplicant);
+        if(principalApplications.isPresent()){
+            principalApplicant.setSurname(principalApplications.get().getSurnameLatin());
+            principalApplicant.setName(principalApplications.get().getNameLatin());
+            principalApplicant.setDateOfBirth(principalApplications.get().getTaxisDateOfBirth());
+        }
         LogoutUtils.forceRelogIfNotCondition(request, ssiApp.getHospitalized());
         return new ModelAndView("redirect:/multi/disqualifyingCrit/view?uuid=" + uuid);
     }
 
     @GetMapping("/nextCompleted")
     protected ModelAndView nextComplete(RedirectAttributes attr, @RequestParam(value = "uuid", required = true) String uuid,
-            ModelMap model, HttpServletRequest request, HttpSession session) {
+                                        ModelMap model, HttpServletRequest request, HttpSession session) {
         return new ModelAndView("redirect:/multi/disqualifyingCrit/view?uuid=" + uuid);
     }
 

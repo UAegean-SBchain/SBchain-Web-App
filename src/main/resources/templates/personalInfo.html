@@ -20,7 +20,7 @@
                 </div>-->
                 <div class="inputContainer inputContainer--big">
                     <label th:text="#{afm}" class="label input__label"> AFM </label>
-                    <input type="text" class="input personalInfo__input input--big" th:value="${ssiInfo != null}? ${ssiInfo[taxisAfm]} : ''" readonly/>
+                    <input id="AFM" type="text" class="input personalInfo__input input--big" th:value="${ssiInfo != null}? ${ssiInfo[taxisAfm]} : ''" readonly/>
                 </div>
             </div>
             <div class="row doublecol__row">
@@ -142,9 +142,21 @@
             <span th:unless="${teacher.gender == 'F'}">Male</span>-->
             
 
-            <div class="submitButton" >
-                <a th:href="@{'/multi/personalInfo/continue?uuid='+${uuid}}" th:text="#{next}" class="nextLink">Next</a>
-            </div> 
+            <div class="submitButton isDisabled"  >
+                <a id="nextButton" th:href="@{'/multi/personalInfo/continue?uuid='+${uuid}}" th:text="#{next}" class="nextLink">Next</a>
+            </div>
+
+
+            <select class="select-css" id="principalSelect" onchange="selectionUpdated()">
+                <option value="0">Επιλογή είδους αίτησης:</option>
+                <option value="personal">Προσωπική</option>
+                <option value="complimentary">Συμπληρωματική</option>
+            </select>
+
+            <div class="inputContainer inputContainer--big" id="InputPrincipal" style="margin-left: 11rem; display:none">
+                <label th:text="#{principal.afm}" class="label input__label"> Principal AFM </label>
+                <input id="InputPrincipalField" type="text" class="input personalInfo__input input--big" onchange="principalAdded()"  >
+            </div>
 
 
         </div>
@@ -154,9 +166,53 @@
     <script type="text/javascript" src="../static/js/infoText.js" th:src="@{/js/infoText.js}"></script>
     <script type="text/javascript" src="../static/js/navigation.js" th:src="@{/js/navigation.js}"></script>
     <script type="text/javascript">
+
+         const principalAFMInput = document.getElementById("InputPrincipalField");
+         principalAFMInput.oninput = principalAdded;
+
+
+        function selectionUpdated(){
+            const principalSelect = document.getElementById("principalSelect" );
+            console.log("selection updated!" +principalSelect.value);
+            if(principalSelect.value === "personal"){
+             let principalAFMBox = document.getElementById("InputPrincipal");
+                principalAFMBox.style.display="none";
+                console.log("post to set the application as the primary applicant");
+                //update view by enabling next button
+                 let nextBtn = document.getElementById("nextButton");
+                 nextBtn.classList.remove("isDisabled");
+                 let afm = document.getElementById("AFM").value;
+                 document.getElementById("nextButton").href = document.getElementById("nextButton").href.split("&principal")[0]+"&principal="+afm;
+            }
+            if(principalSelect.value === "complimentary"){
+                console.log("update view to display the principals AFM input field");
+                let principalAFMBox = document.getElementById("InputPrincipal");
+                principalAFMBox.style.display="block";
+                let nextBtn = document.getElementById("nextButton");
+                nextBtn.classList.add("isDisabled");
+            }
+             if(principalSelect.value === "0"){
+                let principalAFMBox = document.getElementById("InputPrincipal");
+                principalAFMBox.style.display="none";
+                let nextBtn = document.getElementById("nextButton");
+                nextBtn.classList.add("isDisabled");
+            }
+        }
+
+     function principalAdded(e){
+        console.log("principal afm" + e.target.value);
+         let nextBtn = document.getElementById("nextButton");
+         nextBtn.classList.remove("isDisabled");
+         document.getElementById("nextButton").href = document.getElementById("nextButton").href.split("&principal")[0]+"&principal="+e.target.value;
+     }
+
+
         const genderBoxes = document.getElementsByClassName("gender__checkBox");
         const genderBoxContainers = document.getElementsByClassName("gender__checkboxContainer");
         const genderMain = document.getElementById("genderMain");
+        const principalSelect = document.getElementById("principalSelect");
+
+
 
         for(let i=0; i< genderBoxes.length; i++){
             genderBoxes[i].addEventListener('click', function(){
