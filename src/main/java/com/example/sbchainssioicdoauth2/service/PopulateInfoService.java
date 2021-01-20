@@ -5,7 +5,14 @@ import com.example.sbchainssioicdoauth2.model.entity.SsiApplication;
 import com.example.sbchainssioicdoauth2.model.entity.SsiApplication.CredsAndExp;
 import com.example.sbchainssioicdoauth2.model.pojo.HouseholdMember;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
+import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.ui.ModelMap;
+import org.thymeleaf.util.StringUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
@@ -17,14 +24,6 @@ import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import javax.servlet.http.HttpServletRequest;
-
-import lombok.extern.slf4j.Slf4j;
-import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.ui.ModelMap;
-import org.thymeleaf.util.StringUtils;
 
 @Slf4j
 @Service
@@ -121,7 +120,7 @@ public class PopulateInfoService {
 
 //            if (formType.equals(FormType.PERSONAL_INFO.value)) {
             ssiApp.setSsn(getStringIfNotNull(otherClaims.get("ssn"), ssiApp.getSsn()));
-            ssiApp.setTaxisAmka(getStringIfNotNull(otherClaims.get("taxisAmka"), ssiApp.getTaxisAmka()));
+            ssiApp.setTaxisAmka(getStringIfNotNull(otherClaims.get("amka"), ssiApp.getTaxisAmka()));
             ssiApp.setTaxisAfm(getStringIfNotNull(otherClaims.get("taxisAfm"), ssiApp.getTaxisAfm()));
             ssiApp.setTaxisFamilyName(getStringIfNotNull(otherClaims.get("taxisFamilyName"), ssiApp.getTaxisFamilyName()));
             ssiApp.setTaxisFirstName(getStringIfNotNull(otherClaims.get("taxisFirstName"), ssiApp.getTaxisFirstName()));
@@ -145,11 +144,11 @@ public class PopulateInfoService {
             ssiApp.setLuxury(getStringIfNotNull(otherClaims.get("luxury"), ssiApp.getLuxury()));
 
 //            if (formType.equals(FormType.RESIDENCE_INFO.value)) {
-            ssiApp.setStreet(getStringIfNotNull(otherClaims.get("e1-street"), ssiApp.getStreet()));
-            ssiApp.setStreetNumber(getStringIfNotNull(otherClaims.get("e1-number"), ssiApp.getStreetNumber()));
-            ssiApp.setPo(getStringIfNotNull(otherClaims.get("e1-po"), ssiApp.getPo()));
+            ssiApp.setStreet(getStringIfNotNull(otherClaims.get("ebill-street"), ssiApp.getStreet()));
+            ssiApp.setStreetNumber(getStringIfNotNull(otherClaims.get("ebill-number"), ssiApp.getStreetNumber()));
+            ssiApp.setPo(getStringIfNotNull(otherClaims.get("ebill-po"), ssiApp.getPo()));
+            ssiApp.setMunicipality(getStringIfNotNull(otherClaims.get("ebill-municipality"),ssiApp.getMunicipality()));
 
-            ssiApp.setPrefecture(getStringIfNotNull(otherClaims.get("e1-prefecture"), ssiApp.getPrefecture()));
 
 //            if (formType.equals(FormType.FEAD.value)) {
             ssiApp.setParticipateFead(getStringIfNotNull(otherClaims.get("participateFead"), ssiApp.getParticipateFead()));
@@ -172,11 +171,11 @@ public class PopulateInfoService {
             ssiApp.setLandline(getStringIfNotNull(otherClaims.get("landline"), ssiApp.getLandline()));
             ssiApp.setIban(getStringIfNotNull(otherClaims.get("iban"), ssiApp.getIban()));
             Map<String, String> mailAddress = new HashMap<>();
-            mailAddress.put("street", getStringIfNotNull(otherClaims.get("e1-street"), ssiApp.getStreet()));
-            mailAddress.put("streetNumber", getStringIfNotNull(otherClaims.get("e1-number"), ssiApp.getStreetNumber()));
-            mailAddress.put("PO", getStringIfNotNull(otherClaims.get("e1-po"), ssiApp.getPo()));
-            mailAddress.put("municipality", getStringIfNotNull(otherClaims.get("e1-municipality"), ssiApp.getMunicipality()));
-            mailAddress.put("prefecture", getStringIfNotNull(otherClaims.get("e1-prefecture"), ssiApp.getPrefecture()));
+            mailAddress.put("street", getStringIfNotNull(otherClaims.get("ebill-street"), ssiApp.getStreet()));
+            mailAddress.put("streetNumber", getStringIfNotNull(otherClaims.get("ebill-number"), ssiApp.getStreetNumber()));
+            mailAddress.put("PO", getStringIfNotNull(otherClaims.get("ebill-po"), ssiApp.getPo()));
+            mailAddress.put("municipality", getStringIfNotNull(otherClaims.get("ebill-municipality"), ssiApp.getMunicipality()));
+
             ssiApp.setMailAddress(mailAddress);
 //            if (formType.equals(FormType.PARENTHOOD_INFO.value)) {
             if (getStringIfNotNull(otherClaims.get("parenthood"), ssiApp.getParenthood()
@@ -190,7 +189,9 @@ public class PopulateInfoService {
             ssiApp.setCustody(getStringIfNotNull(otherClaims.get("custody"), ssiApp.getCustody()));
             ssiApp.setAdditionalAdults(getStringIfNotNull(otherClaims.get("additionalAdults"), ssiApp.getAdditionalAdults()));
             ssiApp.setGender(getStringIfNotNull(otherClaims.get("mitro-gender"), ssiApp.getGender()));
-            ssiApp.setMunicipality(getStringIfNotNull(otherClaims.get("mitro-municipality"), ssiApp.getMunicipality()));
+            ssiApp.setPrefecture("Attikis");
+            ssiApp.setMunicipality(getStringIfNotNull(otherClaims.get("ebill-municipality"), ssiApp.getMunicipality()));
+
 
 //            if (formType.equals(FormType.FINANCIAL_INFO.value)) {
 

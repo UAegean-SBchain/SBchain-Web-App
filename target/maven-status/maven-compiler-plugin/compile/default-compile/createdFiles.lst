@@ -2,7 +2,6 @@ com/example/sbchainssioicdoauth2/contracts/CaseMonitor$4.class
 com/example/sbchainssioicdoauth2/contracts/CaseMonitor$11.class
 com/example/sbchainssioicdoauth2/service/CacheService.class
 com/example/sbchainssioicdoauth2/controller/DBController.class
-com/example/sbchainssioicdoauth2/model/entity/SsiApplicationNew$CredsAndExp.class
 com/example/sbchainssioicdoauth2/contracts/CaseMonitor_bk$9.class
 com/example/sbchainssioicdoauth2/contracts/CaseMonitor$1.class
 com/example/sbchainssioicdoauth2/controller/RestController.class
@@ -37,7 +36,6 @@ com/example/sbchainssioicdoauth2/contracts/VcRevocationRegistry$RevokedEventEven
 com/example/sbchainssioicdoauth2/contracts/VcRevocationRegistry$2.class
 com/example/sbchainssioicdoauth2/service/PopulateInfoService.class
 com/example/sbchainssioicdoauth2/contracts/CaseMonitor_bk$6.class
-com/example/sbchainssioicdoauth2/model/entity/SsiApplicationNew.class
 com/example/sbchainssioicdoauth2/contracts/VcRevocationRegistry$8.class
 com/example/sbchainssioicdoauth2/contracts/VcRevocationRegistry$LogExistsEventResponse.class
 com/example/sbchainssioicdoauth2/controller/ReviewApplicationsController.class
@@ -68,6 +66,7 @@ com/example/sbchainssioicdoauth2/contracts/CaseMonitor_bk$8.class
 com/example/sbchainssioicdoauth2/contracts/CaseMonitor_bk$12.class
 com/example/sbchainssioicdoauth2/controller/CalculatedAmountsController.class
 com/example/sbchainssioicdoauth2/contracts/VcRevocationRegistry$LogEventResponse.class
+com/example/sbchainssioicdoauth2/model/entity/SsiApplicationOld.class
 com/example/sbchainssioicdoauth2/contracts/CaseMonitor_bk$4.class
 com/example/sbchainssioicdoauth2/contracts/CaseMonitor_bk$10.class
 com/example/sbchainssioicdoauth2/utils/Validators.class
@@ -83,6 +82,7 @@ com/example/sbchainssioicdoauth2/contracts/VcRevocationRegistry$4.class
 com/example/sbchainssioicdoauth2/SbchainSsiOicdOauth2Application.class
 com/example/sbchainssioicdoauth2/contracts/CaseMonitor_bk$3.class
 com/example/sbchainssioicdoauth2/model/pojo/HouseholdMember.class
+com/example/sbchainssioicdoauth2/model/entity/SsiApplicationOld$CredsAndExp.class
 com/example/sbchainssioicdoauth2/controller/ElectricityBillController.class
 com/example/sbchainssioicdoauth2/utils/Wrappers.class
 com/example/sbchainssioicdoauth2/contracts/CaseMonitor_bk$11.class

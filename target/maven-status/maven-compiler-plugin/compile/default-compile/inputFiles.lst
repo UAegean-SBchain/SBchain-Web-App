@@ -7,11 +7,11 @@
 /home/ni/code/java/Sbchain_submission_app/src/main/java/com/example/sbchainssioicdoauth2/controller/NotificationsController.java
 /home/ni/code/java/Sbchain_submission_app/src/main/java/com/example/sbchainssioicdoauth2/utils/RandomIdGenerator.java
 /home/ni/code/java/Sbchain_submission_app/src/main/java/com/example/sbchainssioicdoauth2/service/ResourceService.java
-/home/ni/code/java/Sbchain_submission_app/src/main/java/com/example/sbchainssioicdoauth2/model/entity/SsiApplicationNew.java
 /home/ni/code/java/Sbchain_submission_app/src/main/java/com/example/sbchainssioicdoauth2/config/RestTemplateConfig.java
 /home/ni/code/java/Sbchain_submission_app/src/main/java/com/example/sbchainssioicdoauth2/utils/Wrappers.java
 /home/ni/code/java/Sbchain_submission_app/src/main/java/com/example/sbchainssioicdoauth2/config/security/KeycloakConfig.java
 /home/ni/code/java/Sbchain_submission_app/src/main/java/com/example/sbchainssioicdoauth2/controller/EmploymentController.java
+/home/ni/code/java/Sbchain_submission_app/src/main/java/com/example/sbchainssioicdoauth2/model/entity/SsiApplicationOld.java
 /home/ni/code/java/Sbchain_submission_app/src/main/java/com/example/sbchainssioicdoauth2/contracts/CaseMonitor.java
 /home/ni/code/java/Sbchain_submission_app/src/main/java/com/example/sbchainssioicdoauth2/controller/ContactDetailsController.java
 /home/ni/code/java/Sbchain_submission_app/src/main/java/com/example/sbchainssioicdoauth2/controller/RestController.java

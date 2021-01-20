@@ -4,21 +4,18 @@ import com.example.sbchainssioicdoauth2.model.entity.SsiApplication;
 import com.example.sbchainssioicdoauth2.repository.SsiApplicationRepository;
 import com.example.sbchainssioicdoauth2.utils.Validators;
 import com.example.sbchainssioicdoauth2.utils.Wrappers;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -38,9 +35,20 @@ public class DBService {
             String id = oldApp.get().getId();
             ssiAppRepo.deleteById(id);
         }
-        //TODO if validation fails to we store the application?
-        ssiAppRepo.save(ssiApp);
-        if (Validators.validateSsiApp(ssiApp)) {
+
+        List<SsiApplication> existingApplications = ssiAppRepo.findByTaxisAfm(ssiApp.getTaxisAfm());
+        long afmConflicts = existingApplications.stream().filter(previousApps ->
+                previousApps.getTaxisAfm().equals(ssiApp.getTaxisAfm()) && previousApps.getStatus().equals("active")
+        ).count();
+
+        List<SsiApplication> conflictingIBANS = ssiAppRepo.findByIban(ssiApp.getIban().trim());
+        boolean ibanConflicts =
+                conflictingIBANS.stream().filter(app -> {
+                    return app.getStatus().equals("ACCEPTED");
+                }).count() > 0;
+
+        if (Validators.validateSsiApp(ssiApp) && afmConflicts == 0 && !ibanConflicts) {
+            ssiAppRepo.save(ssiApp);
 
             // convert ssiApp to monitoredCase
             ethServ.addCase(Wrappers.wrapSiiAppToCase(ssiApp));
@@ -58,9 +66,9 @@ public class DBService {
 
             ResponseEntity<String> response
                     = restTemplate.exchange(monitorServiceUrl,
-                            HttpMethod.POST,
-                            entity,
-                            String.class);
+                    HttpMethod.POST,
+                    entity,
+                    String.class);
             return response.getBody();
 
         } else {
@@ -116,5 +124,20 @@ public class DBService {
             ethServ.deleteCaseByUuid(id);
         }
     }
+
+
+    public String replace(SsiApplication ssiApp) {
+        ssiApp.setStatus("active");
+        ssiApp.setTime(LocalDate.now());
+        Optional<SsiApplication> oldApp = ssiAppRepo.findByUuid(ssiApp.getUuid().trim());
+        if (oldApp.isPresent() && oldApp.get().getStatus().equals("temp")) {
+            String id = oldApp.get().getId();
+            ssiAppRepo.deleteById(id);
+        }
+        ssiAppRepo.save(ssiApp);
+        return "OK";
+
+    }
+
 
 }

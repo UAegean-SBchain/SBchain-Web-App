@@ -26,7 +26,7 @@ public class Validators {
                 && app.getLuxury() != null && app.getStreet() != null && app.getStreetNumber() != null
                 && app.getOwnership() != null && app.getSupplyType() != null
                 && app.getMeterNumber() != null && app.getParticipateFead() != null
-                && app.getSelectProvider() != null && app.getGender() != null
+                && app.getSelectProvider() != null
                 && app.getEmploymentStatus() != null && app.getUnemployed() != null
                 && app.getEmployed() != null && app.getOaedId() != null
                 && app.getOaedDate() != null && app.getEmail() != null
@@ -35,7 +35,7 @@ public class Validators {
                 && app.getCustody() != null && app.getAdditionalAdults() != null
                 && app.getSalariesR() != null && app.getPensionsR() != null && app.getFarmingR() != null
                 && app.getFreelanceR() != null && app.getUnemploymentBenefitR() != null && app.getEkasR() != null
-                && app.getOtherIncomeR() != null && app.getOtherBenefitsR() != null && app.getErgomeR() != null
+                && app.getOtherIncomeR() != null && app.getOtherBenefitsR() != null
                 && app.getDepositInterestA() != null && app.getDomesticRealEstateA() != null && app.getVehicleValueA() != null
                 && app.getInvestmentsA() != null;
 
