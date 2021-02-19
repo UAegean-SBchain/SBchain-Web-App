@@ -13,47 +13,35 @@
     
         <h4 th:text="#{amounts.title}" class="formTitle">Personal Info</h4>
             <hr class="divider--light">
-        <div class="row__container"> 
-            <div class="row doublecol__row" th:text="#{amounts.final_text}">
-<!--                <div class="inputContainer inputContainer--big">
-                    <label th:text="#{monthly.guarantee}" class="label input__label"> guarantee </label>
-                    <input type="text" class="input amounts__input input--big" th:value="${ssiInfo != null}? ${monthlyGuarantee}" readonly/>
+        <div class="row__container">
+            <div th:if="${finalized != true || finalized ==null}">
+                <div class="row doublecol__row" th:text="#{amounts.final_text}">
                 </div>
-                <div class="inputContainer inputContainer--big">
-                    <label th:text="#{total.income}" class="label input__label"> total income </label>
-                    <input type="text" class="input amounts__input input--big" th:value="${ssiInfo != null}? ${totalIncome}" readonly/>
-                </div>-->
             </div>
-<!--            <div class="row doublecol__row">
-                <div class="inputContainer inputContainer--big">
-                    <label th:text="#{monthly.income}" class="label input__label"> monthly income </label>
-                    <input type="text" class="input amounts__input input--big" th:value="${ssiInfo != null}? ${monthlyIncome}" readonly/>
+            <div th:if="${finalized == true}">
+                Η αίτηση σας είναι ολοκληρωμένη
+            </div>
+            <div th:if="${finalized != true || finalized ==null}">
+                <div  id="submitWrapper"  class="submitFinalButton">
+                    <a  id="saveButton" th:href="'#'" onclick="saveFinal()" th:text="#{submit}" class="submitFinal">Store to DB</a>
                 </div>
-                <div class="inputContainer inputContainer--big">
-                    <label th:text="#{monthly.aid}" class="label input__label"> monthly aid </label>
-                    <input type="text" class="input amounts__input input--big" th:value="${ssiInfo != null}? ${monthlyAid}" readonly/>
-                </div>
-            </div>-->
-
-        </div>
-        <div class="row button__row">
-<!--            <div class="fetchButton">
-                <a th:href="@{'/multi/amounts/results?uuid='+${uuid}}" th:text="#{fetch.info}" class="fetchLink">Fetch Info</a>
-            </div>-->
-            <div   class="submitFinalButton">
-                <a  id="saveButton" th:href="'#'" onclick="saveFinal()" th:text="#{submit}" class="submitFinal">Store to DB</a>
             </div>
 
-            <div class="issueVCButton">
-                <a  id="issueLink"  th:text="#{issue.vc}" class="submitFinal">Issue VC</a>
-            </div>
+
+
 
 
         </div>
             
-        <div class="row button__row">
-            <div id="messageContainer" style="display:none">
-                mockmessage
+        <div class="row">
+            <div id="messageContainer"  style="margin-top:1rem; display:none">
+            </div>
+            <div id="messageContainer2"  style="margin-top:1rem; display:none">
+
+            </div>
+
+            <div class="issueVCButton">
+                <a  id="issueLink"  th:text="#{issue.vc}" class="submitFinal">Issue VC</a>
             </div>
 
         </div>    

@@ -9,16 +9,7 @@ import com.example.sbchainssioicdoauth2.service.ResourceService;
 import com.example.sbchainssioicdoauth2.utils.FormType;
 import com.example.sbchainssioicdoauth2.utils.LogoutUtils;
 import com.example.sbchainssioicdoauth2.utils.RandomIdGenerator;
-
-import java.beans.IntrospectionException;
-import java.lang.reflect.InvocationTargetException;
-import java.util.Optional;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -28,6 +19,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.beans.IntrospectionException;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -63,6 +62,12 @@ public class PersonalInformationController {
         infoService.populateSsiApp(ssiApp, request, FormType.PERSONAL_DECLARATION.value, uuid);
         ssiApp = infoService.updateModelfromCacheMergeDB(ssiApp, model, request, uuid);
         cacheService.putInfo(ssiApp, uuid);
+        //is this is a previous application
+        if (ssiApp.getHospitalized() != null) {
+            model.addAttribute("old", true);
+        }
+
+
         return new ModelAndView("personalInfo");
     }
 
@@ -80,19 +85,43 @@ public class PersonalInformationController {
 //    @PreAuthorize("hasAuthority('personal_info')")
     @GetMapping("/continue")
     protected ModelAndView personalInfoSubmit(RedirectAttributes attr, @RequestParam(value = "uuid", required = true) String uuid,
-                                              @RequestParam(value = "principal", required = true) String principalAFM,
+                                              @RequestParam(value = "principal", required = false) String principalAFM,
+                                              @RequestParam(value = "household", required = false) String householdAFM,
                                               ModelMap model, HttpServletRequest request, HttpSession session) {
 
         SsiApplication ssiApp = cacheService.get(uuid);
-        Optional<SsiApplication> principalApplications = dbServ.getByTaxisAfm(principalAFM);
-        HouseholdMember principalApplicant = new HouseholdMember();
-        principalApplicant.setAfm(principalAFM);
-        ssiApp.setHouseholdPrincipal(principalApplicant);
-        if(principalApplications.isPresent()){
-            principalApplicant.setSurname(principalApplications.get().getSurnameLatin());
-            principalApplicant.setName(principalApplications.get().getNameLatin());
-            principalApplicant.setDateOfBirth(principalApplications.get().getTaxisDateOfBirth());
+
+        if ((ssiApp.getHouseholdPrincipal() != null && StringUtils.isEmpty(ssiApp.getHouseholdPrincipal().getAfm()))
+                || !StringUtils.isEmpty(principalAFM)) {
+            HouseholdMember principalApplicant = new HouseholdMember();
+            principalApplicant.setAfm(principalAFM);
+            ssiApp.setHouseholdPrincipal(principalApplicant);
+            Optional<SsiApplication> principalApplications = dbServ.getByTaxisAfm(principalApplicant.getAfm());
+            if (principalApplications.isPresent()) {
+                principalApplicant.setSurname(principalApplications.get().getSurnameLatin());
+                principalApplicant.setName(principalApplications.get().getNameLatin());
+                principalApplicant.setDateOfBirth(principalApplications.get().getTaxisDateOfBirth());
+            }
+
+            if (!StringUtils.isEmpty(householdAFM)) {
+                Arrays.stream(householdAFM.split(",")).forEach(afm -> {
+                    HouseholdMember member = new HouseholdMember();
+                    member.setAfm(principalAFM);
+                    member.setName("N/A");
+                    member.setSurname("N/A");
+                    member.setDateOfBirth("01/01/1970");
+                    member.setRelationship("N/A");
+                    if (ssiApp.getHouseholdComposition() == null) {
+                        ssiApp.setHouseholdComposition(new ArrayList<HouseholdMember>());
+                    }
+                    ssiApp.getHouseholdComposition().add(member);
+
+                });
+            }
+
+
         }
+
         LogoutUtils.forceRelogIfNotCondition(request, ssiApp.getHospitalized());
         return new ModelAndView("redirect:/multi/disqualifyingCrit/view?uuid=" + uuid);
     }

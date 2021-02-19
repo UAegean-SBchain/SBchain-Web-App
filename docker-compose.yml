@@ -1,0 +1,17 @@
+version: '3'
+
+volumes:
+  postgres_data:
+    driver: local
+
+services:
+  submit-app:
+    image: endimion13/sbchain-submit:0.0.1d
+    environment:
+      - NODE_ENV=production
+      - ENDPOINT=https://dss.aegean.gr
+      - HTTPS_COOKIES=true
+      - MEMCACHED_URL=memcached:11211
+      - BASE_PATH=sbchain
+    ports:
+      - 8080:8080

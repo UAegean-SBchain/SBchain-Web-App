@@ -7,19 +7,6 @@ import com.example.sbchainssioicdoauth2.service.PopulateInfoService;
 import com.example.sbchainssioicdoauth2.service.ResourceService;
 import com.example.sbchainssioicdoauth2.utils.FormType;
 import com.example.sbchainssioicdoauth2.utils.LogoutUtils;
-
-import java.beans.IntrospectionException;
-import java.lang.reflect.InvocationTargetException;
-import java.security.Principal;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.temporal.ChronoUnit;
-import java.util.*;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import lombok.extern.slf4j.Slf4j;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +17,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.beans.IntrospectionException;
+import java.lang.reflect.InvocationTargetException;
+import java.security.Principal;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -94,6 +94,7 @@ public class ReviewApplicationsController {
                 }
 
             });
+
             model.addAttribute("expired", expiredCreds);
         }
 

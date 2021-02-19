@@ -1,24 +1,28 @@
 package com.example.sbchainssioicdoauth2.config.security;
 
-import java.io.InputStream;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import lombok.extern.slf4j.Slf4j;
 import org.keycloak.adapters.KeycloakConfigResolver;
 import org.keycloak.adapters.KeycloakDeployment;
 import org.keycloak.adapters.KeycloakDeploymentBuilder;
 import org.keycloak.adapters.OIDCHttpFacade;
+import org.thymeleaf.util.StringUtils;
+
+import java.io.InputStream;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
 public class PathBasedKeycloakConfigResolver implements KeycloakConfigResolver {
 
     private Map<String, KeycloakDeployment> cache = new ConcurrentHashMap<String, KeycloakDeployment>();
 
-    public final static String BASE_URL = "http://localhost:8080/";
+    public final static String BASE_URL = StringUtils.isEmpty(System.getenv("BASE_URL"))?"http://localhost:8080/":System.getenv("BASE_URL");
 
     @Override
     public KeycloakDeployment resolve(OIDCHttpFacade.Request request) {
 
+//        log.info("the base url is " + BASE_URL);
+//
         if (request.getRelativePath().equals("/") || request.getRelativePath().equals("/error")
                 || request.getRelativePath().equals("/rest/nonce") || request.getRelativePath().equals("/rest/isBeneficiary")) { //isBeneficiary
             //essentially this returns the root configuration, but since these endpoints are not configured in the

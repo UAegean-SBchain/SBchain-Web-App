@@ -75,6 +75,7 @@ com/example/sbchainssioicdoauth2/contracts/VcRevocationRegistry$5.class
 com/example/sbchainssioicdoauth2/model/entity/SsiApplication$CredsAndExp.class
 com/example/sbchainssioicdoauth2/controller/HouseholdController.class
 com/example/sbchainssioicdoauth2/model/pojo/CasePayment.class
+com/example/sbchainssioicdoauth2/utils/AmountCalculator.class
 com/example/sbchainssioicdoauth2/contracts/CaseMonitor$13.class
 com/example/sbchainssioicdoauth2/config/security/KeycloakSecurityConfig.class
 com/example/sbchainssioicdoauth2/contracts/VcRevocationRegistry$11.class

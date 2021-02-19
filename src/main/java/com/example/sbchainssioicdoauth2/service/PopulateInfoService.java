@@ -232,10 +232,27 @@ public class PopulateInfoService {
                         member.setName(map.get("name"));
                         member.setSurname(map.get("surname"));
                         member.setRelationship(map.get("relation"));
+                        member.setDateOfBirth(map.get("dateOfBirth"));
+                        member.setAfm(map.get("afm"));
                         members.add(member);
                     });
-                    ssiApp.setHouseholdComposition(members);
-                    ssiApp.getHouseholdCompositionHistory().put(lt,members);
+                    HouseholdMember principalMember = new HouseholdMember();
+                    principalMember.setName(ssiApp.getTaxisFirstName());
+                    principalMember.setSurname(ssiApp.getSurnameLatin());
+                    if(ssiApp.getTaxisDateOfBirth().indexOf('/') <0){
+                        principalMember.setDateOfBirth("01/01/"+ssiApp.getTaxisDateOfBirth());
+                    }
+                    principalMember.setAfm(ssiApp.getTaxisAfm());
+                    principalMember.setRelationship("N/A");
+                    members.add(principalMember);
+                    if(ssiApp.getHouseholdComposition() == null){
+                        ssiApp.setHouseholdComposition(members);
+                        ssiApp.getHouseholdCompositionHistory().put(lt,members);
+                    }else{
+                        ssiApp.getHouseholdComposition().addAll(members);
+                        ssiApp.getHouseholdCompositionHistory().put(lt,members);
+                    }
+
                 }
 
             } catch (Exception e) {

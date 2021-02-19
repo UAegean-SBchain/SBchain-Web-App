@@ -12,7 +12,7 @@
     {
         let uuid = /*[[${uuid}]]*/ 'default';
         var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
-        var theUrl = "/db/temp";
+        var theUrl = "/sb/db/temp";
         xmlhttp.open("POST", theUrl);
         xmlhttp.setRequestHeader("Content-Type", 'application/x-www-form-urlencoded');
         xmlhttp.onreadystatechange = function()
@@ -44,15 +44,28 @@
         {
             if(xmlhttp.readyState == 4 && xmlhttp.status == 200)
             {
+                let mContainer = document.getElementById("messageContainer");
+                let mContainer2 = document.getElementById("messageContainer2");
+
                 let rsp = xmlhttp.responseText;
-                if(rsp ==="OK"){
+                if(rsp !=="FAIL" &&  rsp !=="DBFAIL"){
                     let issueHref = document.getElementById("issueLink");
                     let url = /*[[${issueUrl}]]*/ 'default';
-                    issueHref.href= url+"?caseId=uuid";
+                    issueHref.href= url+"?caseId="+uuid;
                     issueHref.style["background-color"]="#006700bb";
+
+                    let ms =   /*[[#{successMessage}]]*/ 'default';
+                    ms = ms+ rsp;
+                    let ms2 = /*[[#{successMessage2}]]*/ 'default';
+                  mContainer.innerText = ms;
+                  mContainer.style.display = "flex";
+
+                  mContainer2.innerText = ms2;
+                  mContainer2.style.display = "flex"
+
                 }
                 
-                let mContainer = document.getElementById("messageContainer");
+
 //                console.log("response is :")
 //                console.log(rsp)
                 if(rsp ==="DBFAIL"){
@@ -72,6 +85,7 @@
             }
             
             document.getElementById("saveButton").href=null;
+            document.getElementById("submitWrapper").style.display="none";
 
         }
                 xmlhttp.send(encodeURI('uuid=' + uuid));

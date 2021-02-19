@@ -2,6 +2,7 @@ package com.example.sbchainssioicdoauth2.service;
 
 import com.example.sbchainssioicdoauth2.model.entity.SsiApplication;
 import com.example.sbchainssioicdoauth2.repository.SsiApplicationRepository;
+import com.example.sbchainssioicdoauth2.utils.AmountCalculator;
 import com.example.sbchainssioicdoauth2.utils.Validators;
 import com.example.sbchainssioicdoauth2.utils.Wrappers;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +29,7 @@ public class DBService {
     private EthereumService ethServ;
 
     public String submit(SsiApplication ssiApp) {
-        ssiApp.setStatus("active");
+
         ssiApp.setTime(LocalDate.now());
         Optional<SsiApplication> oldApp = ssiAppRepo.findByUuid(ssiApp.getUuid().trim());
         if (oldApp.isPresent() && oldApp.get().getStatus().equals("temp")) {
@@ -48,6 +49,7 @@ public class DBService {
                 }).count() > 0;
 
         if (Validators.validateSsiApp(ssiApp) && afmConflicts == 0 && !ibanConflicts) {
+            ssiApp.setStatus("active");
             ssiAppRepo.save(ssiApp);
 
             // convert ssiApp to monitoredCase
@@ -69,7 +71,15 @@ public class DBService {
                     HttpMethod.POST,
                     entity,
                     String.class);
-            return response.getBody();
+            log.info(response.getBody());
+            if(!response.getBody().equals("OK")){
+                ssiApp.setStatus("rejected");
+                ssiAppRepo.save(ssiApp);
+                return "FAIL";
+            }
+            String amount = AmountCalculator.getTotalMonthlyValue(ssiApp, null).toString();
+            log.info("final amount {}", amount);
+            return amount;
 
         } else {
             return "FAIL";

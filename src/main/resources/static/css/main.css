@@ -323,7 +323,8 @@ input[type="text"], .input{
     height: 3.5rem;
     border: none;
     color: white;
-    margin-left:2rem
+    margin-left:0rem;
+    margin-top: 2rem;
 }
 
 .submitButton:focus {

@@ -118,31 +118,33 @@
                     <input type="text" class="input personalInfo__input input--big"  th:value="${ssiInfo != null}? ${ssiInfo[maritalStatus]}" readonly>
                 </div>
             </div>-->
-            <div class="row doublecol__row">
-                <div class="inputContainer inputContainer--big">
-                    <label th:text="#{disability.status}" class="label input__label"> Disability Status</label>
-                    <input type="text" class="input demographicInfo__input input--big" th:value="${ssiInfo != null}? ${ssiInfo[disabilityStatus]}" readonly/>
-                </div>
-                <div class="inputContainer inputContainer--big">
-                    <label th:text="#{level.of.education}" class="label input__label"> Level of Education </label>
-                    <input type="text" class="input personalInfo__input input--big"  th:value="${ssiInfo != null}? ${ssiInfo[levelOfEducation]}" readonly>
-                </div>
-            </div>
+<!--            <div class="row doublecol__row">-->
+<!--                <div class="inputContainer inputContainer&#45;&#45;big">-->
+<!--                    <label th:text="#{disability.status}" class="label input__label"> Disability Status</label>-->
+<!--                    <input type="text" class="input demographicInfo__input input&#45;&#45;big" th:value="${ssiInfo != null}? ${ssiInfo[disabilityStatus]}" readonly/>-->
+<!--                </div>-->
+<!--                <div class="inputContainer inputContainer&#45;&#45;big">-->
+<!--                    <label th:text="#{level.of.education}" class="label input__label"> Level of Education </label>-->
+<!--                    <input type="text" class="input personalInfo__input input&#45;&#45;big"  th:value="${ssiInfo != null}? ${ssiInfo[levelOfEducation]}" readonly>-->
+<!--                </div>-->
+<!--            </div>-->
 
         </div>
-        <div class="row button__row">
-<!--            <div class="fetchButton">
-                <a th:href="@{'/multi/personalInfo/results?uuid='+${uuid}}" th:text="#{fetch.info}" class="fetchLink">Fetch Info</a>
-            </div>-->
-<!--            <div class="submitButton">
-                <a th:href="@{'/multi/personalInfo/continue?uuid='+${uuid}}" th:text="#{next}" class="nextLink">Next</a>
-            </div>-->
-            
-<!--            <span th:if="${ssiInfo[completed]}"></span>
-            <span th:unless="${teacher.gender == 'F'}">Male</span>-->
-            
 
-            <div class="submitButton isDisabled"  >
+
+        <div class="row button__row" th:if="${old == null}">
+            <div class="inputContainer inputContainer--big" id="InputPrincipal" style="display:none">
+                <label th:text="#{principal.afm}" class="label input__label"> Principal AFM </label>
+                <input id="InputPrincipalField" type="text" class="input personalInfo__input input--big" onchange="principalAdded()"  >
+            </div>
+
+            <div class="inputContainer inputContainer--big" id="AdditionalMemberInput" style=" display:none">
+                <label th:text="#{add.member}" class="label input__label"> ADD MEMBER </label>
+                <input id="InputMemberField" type="text" class="input personalInfo__input input--big"  >
+            </div>
+        </div>
+        <div class="row button__row" th:if="${old == null}">
+            <div id="nextButtonWrapper" class="submitButton isDisabled"  >
                 <a id="nextButton" style="pointer-events: none;" th:href="@{'/multi/personalInfo/continue?uuid='+${uuid}}" th:text="#{next}" class="nextLink">Next</a>
             </div>
 
@@ -152,16 +154,20 @@
                 <option value="personal">Προσωπική</option>
                 <option value="complimentary">Συμπληρωματική</option>
             </select>
-
-            <div class="inputContainer inputContainer--big" id="InputPrincipal" style="margin-left: 11rem; display:none">
-                <label th:text="#{principal.afm}" class="label input__label"> Principal AFM </label>
-                <input id="InputPrincipalField" type="text" class="input personalInfo__input input--big" onchange="principalAdded()"  >
-            </div>
-
-
         </div>
+
+        <div class="row button__row" th:if="${old}">
+            <div class="submitButton "  >
+                <a id="nextButton2"   th:href="@{'/multi/personalInfo/continue?uuid='+${uuid}}" th:text="#{next}" class="nextLink">Next</a>
+            </div>
+        </div>
+
+
     <!-- </form> -->
     </div>
+
+    <input type="text"  id="isOld" th:value="${old}" readonly hidden/>
+
     <div th:replace="fragments/footer"></div>
     <script type="text/javascript" src="../static/js/infoText.js" th:src="@{/js/infoText.js}"></script>
     <script type="text/javascript" src="../static/js/navigation.js" th:src="@{/js/navigation.js}"></script>
@@ -170,20 +176,57 @@
          const principalAFMInput = document.getElementById("InputPrincipalField");
          principalAFMInput.oninput = principalAdded;
 
+        function addAfmInputChild(inputField, inputWrapper, additionalAFM,afm){
+
+                inputField.addEventListener('keyup', ({key}) => {
+                         if (key === "Enter"){
+                             additionalAFM.push(inputField.value);
+                             inputField.disabled = true;
+                             console.log(additionalAFM);
+                             var x = document.createElement("INPUT");
+                             x.setAttribute("type", "text");
+                             inputWrapper.appendChild(x);
+                             addAfmInputChild(x, inputWrapper, additionalAFM,afm)
+                              console.log("additionalAFM2")
+
+                        document.getElementById("nextButton").href = document.getElementById("nextButton").href.split("&principal")[0]
+                                    +"&principal="+afm +"&household="+additionalAFM.join(',');
+                         }
+                 })
+
+        }
+
+
 
         function selectionUpdated(){
             const principalSelect = document.getElementById("principalSelect" );
             console.log("selection updated!" +principalSelect.value);
+             let additionalMemberInputWrapper = document.getElementById("AdditionalMemberInput");
+             let additionalMemberInput = document.getElementById("InputMemberField");
+
             if(principalSelect.value === "personal"){
              let principalAFMBox = document.getElementById("InputPrincipal");
+
+             additionalMemberInputWrapper.style.display = "flex";
+
                 principalAFMBox.style.display="none";
-                console.log("post to set the application as the primary applicant");
+
                 //update view by enabling next button
                  let nextBtn = document.getElementById("nextButton");
                  nextBtn.classList.remove("isDisabled");
+                 document.getElementById("nextButtonWrapper").classList.remove("isDisabled");
+
                  nextBtn.style["pointer-events"] = "auto";
                  let afm = document.getElementById("AFM").value;
-                 document.getElementById("nextButton").href = document.getElementById("nextButton").href.split("&principal")[0]+"&principal="+afm;
+                 let additionalAFM = [];
+                 addAfmInputChild(document.getElementById("InputMemberField"), additionalMemberInputWrapper, additionalAFM,afm);
+
+
+
+                    document.getElementById("nextButton").href = document.getElementById("nextButton").href.split("&principal")[0]+"&principal="+afm;
+
+
+
             }
             if(principalSelect.value === "complimentary"){
                 console.log("update view to display the principals AFM input field");
@@ -191,13 +234,16 @@
                 principalAFMBox.style.display="block";
                 let nextBtn = document.getElementById("nextButton");
                 nextBtn.classList.add("isDisabled");
+                document.getElementById("nextButtonWrapper").classList.add("isDisabled");
                 nextBtn.style["pointer-events"] = "none";
+                additionalMemberInputWrapper.style.display = "none";
             }
              if(principalSelect.value === "0"){
                 let principalAFMBox = document.getElementById("InputPrincipal");
                 principalAFMBox.style.display="none";
                 let nextBtn = document.getElementById("nextButton");
                 nextBtn.classList.add("isDisabled");
+                document.getElementById("nextButtonWrapper").classList.add("isDisabled");
                 nextBtn.style["pointer-events"] = "none";
             }
         }
@@ -206,6 +252,7 @@
         console.log("principal afm" + e.target.value);
          let nextBtn = document.getElementById("nextButton");
          nextBtn.classList.remove("isDisabled");
+         document.getElementById("nextButtonWrapper").classList.remove("isDisabled");
          nextBtn.style["pointer-events"] = "auto";
          document.getElementById("nextButton").href = document.getElementById("nextButton").href.split("&principal")[0]+"&principal="+e.target.value;
      }

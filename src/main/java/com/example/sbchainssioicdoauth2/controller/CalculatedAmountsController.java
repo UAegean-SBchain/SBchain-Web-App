@@ -5,10 +5,6 @@ import com.example.sbchainssioicdoauth2.service.CacheService;
 import com.example.sbchainssioicdoauth2.service.DBService;
 import com.example.sbchainssioicdoauth2.service.PopulateInfoService;
 import com.example.sbchainssioicdoauth2.utils.FormType;
-import java.beans.IntrospectionException;
-import java.lang.reflect.InvocationTargetException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,6 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.beans.IntrospectionException;
+import java.lang.reflect.InvocationTargetException;
 
 @Slf4j
 @Controller
@@ -46,6 +47,10 @@ public class CalculatedAmountsController {
         cacheService.putInfo(ssiApp, uuid);
 
         String issueUrl = StringUtils.isEmpty(System.getenv("ISSUE_URL")) ? "https://dss.aegean.gr/sbchain/vc/issue/benefit" : System.getenv("ISSUE_URL");
+        if(ssiApp.getStatus()!= null && ssiApp.getStatus().equals("active")){
+            model.addAttribute("finalized", true);
+        }
+
         model.addAttribute("issueUrl", issueUrl);
         return new ModelAndView("calculatedAmounts");
     }

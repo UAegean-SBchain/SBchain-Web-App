@@ -15,7 +15,7 @@
         <hr class="divider--light">
 
 
-        <div class="row__container">
+        <div class="row__container" th:if="${expired.size() > 0}" >
 
 
             <h4 th:text="#{landing.expired}">The following credentials have expired. The corresponding
@@ -103,7 +103,7 @@
     function del(uuid)
     {
         var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
-        var theUrl = "/db/delete";
+        var theUrl = "/sb/db/delete";
         xmlhttp.open("POST", theUrl);
         xmlhttp.setRequestHeader("Content-Type", 'application/x-www-form-urlencoded');
         xmlhttp.onreadystatechange = function()
